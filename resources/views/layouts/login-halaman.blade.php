@@ -6,7 +6,9 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>@yield('title', 'Login - Lapak Tani')</title>
-    
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+
+
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-white h-screen overflow-hidden">
