@@ -1,9 +1,9 @@
-@extends('layouts.login-halaman')
+@extends('layouts.app')
 
-@section('title', 'Masuk - Lapak Tani')
+@section('title', 'Masuk - Katalog Pertanian')
 
 @section('content')
-<div class="min-h-screen flex items-center justify-center bg-white py-12 px-4 sm:px-6 lg:px-8">
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
     <div class="max-w-md w-full space-y-8">
         <div>
             <div class="flex justify-center">
@@ -24,7 +24,7 @@
             </p>
         </div>
         
-        <form class="mt-8 space-y-6" action="{{ route('login') }}" method="POST">
+        <form class="mt-8 space-y-6" action="{{ route('login') }}" method="POST" data-ajax="true">
             @csrf
             <div class="space-y-4">
                 <div>
