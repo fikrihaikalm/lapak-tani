@@ -14,7 +14,7 @@
             @forelse($educations as $education)
             <article class="card hover:shadow-lg transition duration-200">
                 <div class="aspect-w-16 aspect-h-9">
-                    <img src="{{ $education->image_url ?: 'https://images.pexels.com/photos/2132227/pexels-photo-2132227.jpeg' }}" 
+                    <img src="{{ $education->image_path ? asset('storage/' . $education->image_path) : 'https://via.placeholder.com/40' }}"
                          alt="{{ $education->title }}" 
                          class="w-full h-48 object-cover">
                 </div>

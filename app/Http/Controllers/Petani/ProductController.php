@@ -26,8 +26,14 @@ class ProductController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'image_url' => 'nullable|url',
+            'image' => 'nullable|image',
         ]);
+
+        // Simpan gambar jika ada
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+        }
 
         Product::create([
             'user_id' => auth()->id(),
@@ -35,7 +41,8 @@ class ProductController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'stock' => $request->stock,
-            'image_url' => $request->image_url,
+            'image_path' => $imagePath,
+
         ]);
 
         return response()->json([
@@ -58,16 +65,24 @@ class ProductController extends Controller
             'description' => 'required|string',
             'price' => 'required|numeric|min:0',
             'stock' => 'required|integer|min:0',
-            'image_url' => 'nullable|url',
+            'image' => 'nullable|image',
         ]);
 
         $product = Product::where('user_id', auth()->id())->findOrFail($id);
+
+        // Simpan gambar jika ada
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('products', 'public');
+        }
+
         $product->update([
             'name' => $request->name,
             'description' => $request->description,
             'price' => $request->price,
             'stock' => $request->stock,
-            'image_url' => $request->image_url,
+            'image_path' => $imagePath,
+
         ]);
 
         return response()->json([

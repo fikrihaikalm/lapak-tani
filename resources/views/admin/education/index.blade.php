@@ -30,7 +30,7 @@
                 <tr>
                     <td class="px-6 py-4">
                         <div class="flex items-center">
-                            <img src="{{ $education->image_url ?: 'https://images.pexels.com/photos/2132227/pexels-photo-2132227.jpeg' }}" 
+                            <img src="{{ $education->image_path ? asset('storage/' . $education->image_path) : 'https://via.placeholder.com/40' }}"
                                  alt="{{ $education->title }}" 
                                  class="w-10 h-10 rounded-lg object-cover">
                             <div class="ml-4">

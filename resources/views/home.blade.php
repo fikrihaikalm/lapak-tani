@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Beranda - Katalog Pertanian Lokal')
+@section('title', 'Beranda - Lapak Tani')
 
 @section('content')
 <!-- Hero Section -->
@@ -8,7 +8,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div class="text-center">
             <h1 class="text-4xl md:text-6xl font-bold mb-6">
-                Katalog Pertanian Lokal
+                Lapak Tani
             </h1>
             <p class="text-xl md:text-2xl mb-8 text-hijau-100">
                 Menghubungkan petani lokal dengan konsumen dan menginspirasi generasi muda untuk terjun ke dunia pertanian
@@ -84,7 +84,7 @@
             @foreach($products as $product)
             <div class="card hover:shadow-lg transition duration-200">
                 <div class="aspect-w-16 aspect-h-9">
-                    <img src="{{ $product->image_url ?: 'https://images.pexels.com/photos/1656663/pexels-photo-1656663.jpeg' }}" 
+                    <img src="{{ $product->image_path ? asset('storage/' . $product->image_path) : 'https://via.placeholder.com/40' }}"
                          alt="{{ $product->name }}" 
                          class="w-full h-48 object-cover">
                 </div>
@@ -122,7 +122,7 @@
             @foreach($educations as $education)
             <article class="card hover:shadow-lg transition duration-200">
                 <div class="aspect-w-16 aspect-h-9">
-                    <img src="{{ $education->image_url ?: 'https://images.pexels.com/photos/2132227/pexels-photo-2132227.jpeg' }}" 
+                    <img src="{{ $education->image_path ? asset('storage/' . $education->image_path) : 'https://via.placeholder.com/40' }}"
                          alt="{{ $education->title }}" 
                          class="w-full h-48 object-cover">
                 </div>

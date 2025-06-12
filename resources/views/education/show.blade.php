@@ -36,9 +36,9 @@
         </header>
         
         <!-- Featured Image -->
-        @if($education->image_url)
+        @if($education->image_path)
         <div class="mb-8">
-            <img src="{{ $education->image_url }}" 
+            <img src="{{ $education->image_path ? asset('storage/' . $education->image_path) : 'https://via.placeholder.com/40' }}"
                  alt="{{ $education->title }}" 
                  class="w-full h-64 md:h-96 object-cover rounded-lg shadow-lg">
         </div>

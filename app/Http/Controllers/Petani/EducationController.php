@@ -24,14 +24,20 @@ class EducationController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'image_url' => 'nullable|url',
+            'image' => 'nullable|image',
+            
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('educations', 'public');
+        }
 
         Education::create([
             'user_id' => auth()->id(),
             'title' => $request->title,
             'content' => $request->content,
-            'image_url' => $request->image_url,
+            'image_path' => $imagePath,
         ]);
 
         return response()->json([
@@ -52,14 +58,19 @@ class EducationController extends Controller
         $request->validate([
             'title' => 'required|string|max:255',
             'content' => 'required|string',
-            'image_url' => 'nullable|url',
+            'image' => 'nullable|image',
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('educations', 'public');
+        }
 
         $education = Education::where('user_id', auth()->id())->findOrFail($id);
         $education->update([
             'title' => $request->title,
             'content' => $request->content,
-            'image_url' => $request->image_url,
+            'image_path' => $imagePath,
         ]);
 
         return response()->json([

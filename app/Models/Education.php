@@ -16,7 +16,7 @@ class Education extends Model
         'user_id',
         'title',
         'content',
-        'image_url',
+        'image_path',
     ];
 
     public function user()

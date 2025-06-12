@@ -14,7 +14,7 @@
             @forelse($products as $product)
             <div class="card hover:shadow-lg transition duration-200">
                 <div class="aspect-w-16 aspect-h-9">
-                    <img src="{{ $product->image_url ?: 'https://images.pexels.com/photos/1656663/pexels-photo-1656663.jpeg' }}" 
+                    <img src="{{ $product->image_path ? asset('storage/' . $product->image_path) : 'https://via.placeholder.com/40' }}"
                          alt="{{ $product->name }}" 
                          class="w-full h-48 object-cover">
                 </div>

@@ -31,7 +31,7 @@
                 <tr>
                     <td class="px-6 py-4">
                         <div class="flex items-center">
-                            <img src="{{ $product->image_url ?: 'https://images.pexels.com/photos/1656663/pexels-photo-1656663.jpeg' }}" 
+                            <img src="{{ $product->image_path ? asset('storage/' . $product->image_path) : 'https://via.placeholder.com/40' }}"
                                  alt="{{ $product->name }}" 
                                  class="w-10 h-10 rounded-lg object-cover">
                             <div class="ml-4">
