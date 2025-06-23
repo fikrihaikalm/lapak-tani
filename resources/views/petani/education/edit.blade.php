@@ -11,7 +11,7 @@
             <p class="text-sm text-gray-600 mt-1">Perbarui konten edukasi Anda</p>
         </div>
         
-        <form action="{{ route('petani.education.update') }}" method="POST" enctype="multipart/form-data" data-ajax="true" class="p-6 space-y-6">
+        <form action="{{ route('petani.education.update', $education->id) }}" method="POST" enctype="multipart/form-data" data-ajax="true" class="p-6 space-y-6">
             @csrf
             @method('PUT')
             

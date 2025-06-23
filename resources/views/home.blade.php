@@ -13,14 +13,14 @@
             <p class="text-xl md:text-2xl mb-8 text-hijau-100">
                 Menghubungkan petani lokal dengan konsumen dan menginspirasi generasi muda untuk terjun ke dunia pertanian
             </p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <!-- <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="{{ route('products') }}" class="bg-white text-hijau-600 font-semibold py-3 px-8 rounded-lg hover:bg-gray-100 transition duration-200">
                     Jelajahi Produk
                 </a>
                 <a href="{{ route('education') }}" class="border-2 border-white text-white font-semibold py-3 px-8 rounded-lg hover:bg-white hover:text-hijau-600 transition duration-200">
                     Pelajari Pertanian
                 </a>
-            </div>
+            </div> -->
         </div>
     </div>
 </section>
@@ -146,6 +146,7 @@
 </section>
 
 <!-- CTA Section -->
+@guest
 <section class="py-16 bg-black text-white">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <h2 class="text-3xl font-bold mb-4">Bergabunglah dengan Komunitas Kami</h2>
@@ -161,7 +162,9 @@
                 Masuk ke Akun
             </a>
         </div>
-        @endguest
+        <!-- @endguest -->
     </div>
 </section>
+@endguest
+
 @endsection

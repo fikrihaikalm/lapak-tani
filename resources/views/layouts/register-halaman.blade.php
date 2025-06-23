@@ -20,7 +20,7 @@
         </div>
 
         <!-- KANAN: Gambar -->
-        <div class="hidden md:block w-1/2 bg-cover bg-center" style="background-image: url('{{ asset('storage/login.png') }}');">
+        <div class="hidden md:block w-1/2 bg-cover bg-center" style="background-image: url('{{ asset('storage/register.png') }}');">
         </div>
     </main>
 </body>

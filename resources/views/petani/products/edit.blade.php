@@ -11,7 +11,7 @@
             <p class="text-sm text-gray-600 mt-1">Perbarui informasi produk Anda</p>
         </div>
         
-        <form action="{{ route('petani.products.update') }}" method="POST" enctype="multipart/form-data" data-ajax="true" class="p-6 space-y-6">
+        <form action="{{ route('petani.products.update', $product->id) }}" method="POST" enctype="multipart/form-data" data-ajax="true" class="p-6 space-y-6">
             @csrf
             @method('PUT')
             
