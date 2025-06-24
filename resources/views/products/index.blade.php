@@ -13,35 +13,112 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             @forelse($products as $product)
             <div class="card hover:shadow-lg transition duration-200">
-                <div class="aspect-w-16 aspect-h-9">
-                    <img src="{{ $product->image_path ? asset('storage/' . $product->image_path) : 'https://via.placeholder.com/40' }}"
-                         alt="{{ $product->name }}" 
-                         class="w-full h-48 object-cover">
+                <div class="relative">
+                    <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-48 object-cover">
+
+                    <!-- Wishlist Button for Konsumen -->
+                    @auth
+                        @if(auth()->user()->isKonsumen())
+                            <button type="button" class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50"
+                                    onclick="toggleWishlist({{ $product->id }}, this)">
+                                <svg class="w-5 h-5 {{ $product->isInWishlist(auth()->id()) ? 'text-red-500' : 'text-gray-400' }}"
+                                     fill="{{ $product->isInWishlist(auth()->id()) ? 'currentColor' : 'none' }}"
+                                     stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
+                                </svg>
+                            </button>
+                        @endif
+                    @endauth
+
+                    <!-- Badges -->
+                    <div class="absolute top-3 left-3 space-y-1">
+                        @if($product->is_organic)
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                Organik
+                            </span>
+                        @endif
+                        @if($product->is_featured)
+                            <span class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">
+                                Unggulan
+                            </span>
+                        @endif
+                    </div>
+
+                    <!-- Stock Status -->
+                    @if($product->stock <= 0)
+                        <div class="absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center">
+                            <span class="text-white font-semibold">Stok Habis</span>
+                        </div>
+                    @endif
                 </div>
+
                 <div class="p-6">
                     <h3 class="text-lg font-semibold text-gray-900 mb-2">{{ $product->name }}</h3>
-                    <p class="text-gray-600 mb-4 line-clamp-2">{{ Str::limit($product->description, 100) }}</p>
+                    <p class="text-gray-600 mb-3 line-clamp-2">{{ Str::limit($product->description, 100) }}</p>
+
+                    <!-- Price and Rating -->
+                    <div class="flex justify-between items-center mb-3">
+                        <div>
+                            <span class="text-xl font-bold text-hijau-600">{{ $product->formatted_price }}</span>
+                            <span class="text-sm text-gray-500">/ {{ $product->unit }}</span>
+                        </div>
+                        @if($product->rating > 0)
+                            <div class="flex items-center space-x-1">
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                                <span class="text-sm text-gray-600">{{ $product->formatted_rating }}</span>
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Petani Info -->
+                    <div class="flex items-center space-x-2 mb-3">
+                        <img src="{{ $product->user->avatar_url }}" alt="{{ $product->user->name }}" class="w-6 h-6 rounded-full">
+                        <span class="text-sm text-gray-600">{{ $product->user->name }}</span>
+                        @if($product->user->is_verified)
+                            <svg class="w-4 h-4 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                            </svg>
+                        @endif
+                    </div>
+
+                    <!-- Stock and Sales Info -->
                     <div class="flex justify-between items-center mb-4">
-                        <span class="text-2xl font-bold text-hijau-600">{{ $product->formatted_price }}</span>
                         <span class="text-sm text-gray-500">Stok: {{ $product->stock }}</span>
+                        @if($product->total_sold > 0)
+                            <span class="text-sm text-gray-500">{{ $product->total_sold }} terjual</span>
+                        @endif
                     </div>
-                    <div class="text-sm text-gray-500 mb-4">
-                        <div class="flex items-center">
-                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"/>
-                            </svg>
-                            {{ $product->user->name }}
-                        </div>
-                        <div class="flex items-center mt-1">
-                            <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"/>
-                            </svg>
-                            {{ $product->created_at->format('d M Y') }}
-                        </div>
-                    </div>
-                    <button class="w-full btn-primary">
-                        Hubungi Petani
-                    </button>
+
+                    <!-- Action Buttons -->
+                    @auth
+                        @if(auth()->user()->isKonsumen())
+                            @if($product->stock > 0)
+                                <button type="button" class="w-full btn-primary mb-2" onclick="addToCart({{ $product->id }})">
+                                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6"></path>
+                                    </svg>
+                                    Tambah ke Keranjang
+                                </button>
+                            @else
+                                <button type="button" class="w-full bg-gray-300 text-gray-500 font-medium py-2 px-4 rounded-lg cursor-not-allowed mb-2" disabled>
+                                    Stok Habis
+                                </button>
+                            @endif
+                            <a href="{{ route('social.profile', $product->user->id) }}" class="block w-full text-center btn-secondary">
+                                Lihat Profil Petani
+                            </a>
+                        @else
+                            <a href="{{ route('social.profile', $product->user->id) }}" class="block w-full text-center btn-primary">
+                                Lihat Profil Petani
+                            </a>
+                        @endif
+                    @else
+                        <a href="{{ route('login') }}" class="block w-full text-center btn-primary">
+                            Login untuk Membeli
+                        </a>
+                    @endauth
                 </div>
             </div>
             @empty
@@ -62,4 +139,92 @@
         @endif
     </div>
 </div>
+
+<script>
+function addToCart(productId) {
+    fetch('/konsumen/cart/add', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            product_id: productId,
+            quantity: 1
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // Update cart count in navigation
+            const cartCount = document.querySelector('.absolute.-top-2.-right-2');
+            if (cartCount) {
+                cartCount.textContent = data.cart_count;
+            }
+
+            // Show success message
+            showSuccess(data.message);
+        } else {
+            showError(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        showError('Terjadi kesalahan saat menambahkan ke keranjang');
+    });
+}
+
+function toggleWishlist(productId, button) {
+    fetch('/konsumen/wishlist/toggle', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify({
+            product_id: productId
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            const icon = button.querySelector('svg');
+            if (data.action === 'added') {
+                icon.classList.remove('text-gray-400');
+                icon.classList.add('text-red-500');
+                icon.setAttribute('fill', 'currentColor');
+            } else {
+                icon.classList.remove('text-red-500');
+                icon.classList.add('text-gray-400');
+                icon.setAttribute('fill', 'none');
+            }
+
+            // Show success message
+            alert(data.message);
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Terjadi kesalahan saat mengubah wishlist');
+    });
+}
+
+// Load cart count on page load
+document.addEventListener('DOMContentLoaded', function() {
+    @auth
+        @if(auth()->user()->isKonsumen())
+            fetch('/konsumen/keranjang/count')
+                .then(response => response.json())
+                .then(data => {
+                    const cartCount = document.getElementById('cart-count');
+                    if (cartCount) {
+                        cartCount.textContent = data.count;
+                    }
+                });
+        @endif
+    @endauth
+});
+</script>
 @endsection

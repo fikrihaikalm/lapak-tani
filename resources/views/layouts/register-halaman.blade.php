@@ -10,17 +10,13 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="bg-white h-screen overflow-hidden">
-    <main class="flex h-full">
-        <!-- KIRI: Konten Form Login/Register -->
-        <div class="w-full md:w-1/2 flex items-center justify-center px-6 bg-white">
-            <div class="w-full max-w-md">
+<body class="bg-gradient-to-br from-hijau-50 to-coklat-50">
+    <main class="min-h-screen lg:h-screen lg:overflow-hidden py-4 lg:py-8">
+        <!-- Konten Form Register -->
+        <div class="w-full flex items-center justify-center px-4 sm:px-6 lg:px-8 h-full">
+            <div class="w-full max-w-6xl lg:max-w-5xl">
                 @yield('content')
             </div>
-        </div>
-
-        <!-- KANAN: Gambar -->
-        <div class="hidden md:block w-1/2 bg-cover bg-center" style="background-image: url('{{ asset('storage/register.png') }}');">
         </div>
     </main>
 </body>

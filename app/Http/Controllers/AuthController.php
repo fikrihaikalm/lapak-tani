@@ -48,25 +48,30 @@ class AuthController extends Controller
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+            'user_type' => 'required|in:petani,konsumen',
             'phone' => 'nullable|string|max:20',
             'address' => 'nullable|string',
+            'farm_name' => 'nullable|string|max:255',
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'petani',
+            'user_type' => $request->user_type,
             'phone' => $request->phone,
             'address' => $request->address,
+            'farm_name' => $request->farm_name,
         ]);
 
         Auth::login($user);
 
+        $redirectRoute = $user->isPetani() ? 'petani.dashboard' : 'home';
+
         return response()->json([
             'success' => true,
             'message' => 'Registrasi berhasil!',
-            'redirect' => route('home')
+            'redirect' => route($redirectRoute)
         ]);
     }
 
