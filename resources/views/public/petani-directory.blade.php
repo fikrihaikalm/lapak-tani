@@ -139,7 +139,7 @@
                         </a>
                         @auth
                             @if(auth()->user()->isKonsumen())
-                                <button type="button" class="btn-secondary" onclick="toggleFollow({{ $farmer->id }}, this)">
+                                <button type="button" class="btn-secondary" onclick="SocialManager.toggleFollow({{ $farmer->id }}, this)">
                                     {{ auth()->user()->isFollowing($farmer) ? 'Unfollow' : 'Follow' }}
                                 </button>
                             @endif
@@ -179,26 +179,5 @@
     </div>
 </div>
 
-<script>
-function toggleFollow(userId, button) {
-    @auth
-        fetch('/follow', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({ user_id: userId })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                button.textContent = data.action === 'followed' ? 'Unfollow' : 'Follow';
-            }
-        });
-    @else
-        window.location.href = '{{ route("login") }}';
-    @endauth
-}
-</script>
+
 @endsection

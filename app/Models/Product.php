@@ -22,8 +22,7 @@ class Product extends Model
         'weight',
         'is_organic',
         'is_featured',
-        'rating',
-        'total_reviews',
+
         'total_sold',
         'image_path',
         'additional_images',
@@ -32,7 +31,7 @@ class Product extends Model
     protected $casts = [
         'price' => 'decimal:2',
         'weight' => 'decimal:2',
-        'rating' => 'decimal:2',
+
         'is_organic' => 'boolean',
         'is_featured' => 'boolean',
         'additional_images' => 'array',
@@ -58,10 +57,7 @@ class Product extends Model
         return $this->hasMany(OrderItem::class);
     }
 
-    public function reviews()
-    {
-        return $this->hasMany(ProductReview::class);
-    }
+
 
     public function wishlistItems()
     {
@@ -73,16 +69,7 @@ class Product extends Model
         return 'Rp ' . number_format($this->price, 0, ',', '.');
     }
 
-    public function getFormattedRatingAttribute()
-    {
-        return number_format($this->rating, 1);
-    }
 
-    public function getStarsAttribute()
-    {
-        $rating = floor($this->rating);
-        return str_repeat('★', $rating) . str_repeat('☆', 5 - $rating);
-    }
 
     public function getImageUrlAttribute()
     {

@@ -30,27 +30,74 @@ class PublicController extends Controller
 
     public function testimonials()
     {
-        // Get some successful petani with their stats
-        $successfulPetani = User::where('user_type', 'petani')
-            ->withCount(['products', 'orders as total_sales'])
-            ->having('products_count', '>', 0)
-            ->orderBy('total_sales', 'desc')
-            ->take(6)
-            ->get();
+        // Static testimonials data
+        $testimonials = [
+            [
+                'name' => 'Pak Budi Santoso',
+                'role' => 'Petani Organik',
+                'location' => 'Malang, Jawa Timur',
+                'message' => 'Lapak Tani membantu saya menjual hasil panen langsung ke konsumen. Sekarang pendapatan saya meningkat 40% dibanding jual ke tengkulak.',
+                'rating' => 5,
+                'avatar' => 'https://ui-avatars.com/api/?name=Budi+Santoso&background=10b981&color=fff'
+            ],
+            [
+                'name' => 'Ibu Sari Dewi',
+                'role' => 'Konsumen',
+                'location' => 'Surabaya, Jawa Timur',
+                'message' => 'Sayuran yang saya beli di Lapak Tani selalu segar dan berkualitas. Harganya juga lebih murah karena langsung dari petani.',
+                'rating' => 5,
+                'avatar' => 'https://ui-avatars.com/api/?name=Sari+Dewi&background=3b82f6&color=fff'
+            ],
+            [
+                'name' => 'Pak Ahmad Wijaya',
+                'role' => 'Petani Sayuran',
+                'location' => 'Banyuwangi, Jawa Timur',
+                'message' => 'Platform ini sangat membantu petani kecil seperti saya. Fitur edukasi pertaniannya juga sangat bermanfaat untuk meningkatkan hasil panen.',
+                'rating' => 5,
+                'avatar' => 'https://ui-avatars.com/api/?name=Ahmad+Wijaya&background=f59e0b&color=fff'
+            ],
+            [
+                'name' => 'Ibu Rina Kusuma',
+                'role' => 'Konsumen',
+                'location' => 'Kediri, Jawa Timur',
+                'message' => 'Berbelanja di Lapak Tani memberikan kepuasan tersendiri karena saya tahu produk yang dibeli langsung membantu petani lokal.',
+                'rating' => 5,
+                'avatar' => 'https://ui-avatars.com/api/?name=Rina+Kusuma&background=8b5cf6&color=fff'
+            ],
+            [
+                'name' => 'Pak Joko Susilo',
+                'role' => 'Petani Buah',
+                'location' => 'Probolinggo, Jawa Timur',
+                'message' => 'Sejak bergabung dengan Lapak Tani, saya tidak perlu lagi khawatir mencari pembeli. Konsumen langsung datang ke produk saya.',
+                'rating' => 5,
+                'avatar' => 'https://ui-avatars.com/api/?name=Joko+Susilo&background=ef4444&color=fff'
+            ],
+            [
+                'name' => 'Ibu Maya Sari',
+                'role' => 'Konsumen',
+                'location' => 'Jember, Jawa Timur',
+                'message' => 'Kualitas produk organik di Lapak Tani sangat baik. Anak-anak saya jadi lebih suka makan sayur karena rasanya yang segar.',
+                'rating' => 5,
+                'avatar' => 'https://ui-avatars.com/api/?name=Maya+Sari&background=06b6d4&color=fff'
+            ]
+        ];
 
-        // Get some happy customers (konsumen with completed orders)
-        $happyCustomers = User::where('user_type', 'konsumen')
-            ->whereHas('orders', function($query) {
-                $query->where('status', 'delivered');
-            })
-            ->withCount(['orders as completed_orders' => function($query) {
-                $query->where('status', 'delivered');
-            }])
-            ->orderBy('completed_orders', 'desc')
-            ->take(6)
-            ->get();
+        return view('public.testimonials', compact('testimonials'));
+    }
 
-        return view('public.testimonials', compact('successfulPetani', 'happyCustomers'));
+    public function terms()
+    {
+        return view('public.terms');
+    }
+
+    public function privacy()
+    {
+        return view('public.privacy');
+    }
+
+    public function help()
+    {
+        return view('public.help');
     }
 
     public function contact()
@@ -108,58 +155,7 @@ class PublicController extends Controller
         return view('public.faq', compact('faqs'));
     }
 
-    public function privacy()
-    {
-        return view('public.privacy');
-    }
 
-    public function terms()
-    {
-        return view('public.terms');
-    }
-
-    public function blog(Request $request)
-    {
-        // Get featured post
-        $featuredPost = Education::with(['user', 'category'])
-            ->where('is_featured', true)
-            ->latest()
-            ->first();
-
-        // Get all posts (excluding featured)
-        $postsQuery = Education::with(['user', 'category'])
-            ->when($featuredPost, function($query) use ($featuredPost) {
-                return $query->where('id', '!=', $featuredPost->id);
-            })
-            ->when($request->category, function($query) use ($request) {
-                return $query->where('category_id', $request->category);
-            });
-
-        $posts = $postsQuery->latest()->paginate(12);
-
-        $categories = EducationCategory::withCount('educations')
-            ->having('educations_count', '>', 0)
-            ->get();
-
-        return view('public.blog', compact('posts', 'categories', 'featuredPost'));
-    }
-
-    public function blogPost($id)
-    {
-        $post = Education::with(['user', 'category'])->findOrFail($id);
-        
-        // Increment views
-        $post->increment('views_count');
-
-        // Get related posts
-        $relatedPosts = Education::where('id', '!=', $id)
-            ->where('category_id', $post->category_id)
-            ->latest()
-            ->take(3)
-            ->get();
-
-        return view('public.blog-post', compact('post', 'relatedPosts'));
-    }
 
     public function petaniDirectory(Request $request)
     {
@@ -186,9 +182,6 @@ class PublicController extends Controller
 
         // Sorting
         switch ($request->sort) {
-            case 'rating':
-                $query->orderBy('rating', 'desc');
-                break;
             case 'products':
                 $query->orderBy('products_count', 'desc');
                 break;

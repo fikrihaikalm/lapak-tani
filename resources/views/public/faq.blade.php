@@ -243,35 +243,7 @@
     </div>
 </div>
 
-<script>
-function toggleFAQ(button) {
-    const answer = button.nextElementSibling;
-    const icon = button.querySelector('svg');
-    
-    if (answer.classList.contains('hidden')) {
-        answer.classList.remove('hidden');
-        icon.style.transform = 'rotate(180deg)';
-    } else {
-        answer.classList.add('hidden');
-        icon.style.transform = 'rotate(0deg)';
-    }
-}
-
-// Search functionality
-document.getElementById('faq-search').addEventListener('input', function(e) {
-    const searchTerm = e.target.value.toLowerCase();
-    const faqItems = document.querySelectorAll('.faq-item');
-    
-    faqItems.forEach(item => {
-        const question = item.querySelector('.faq-question h3').textContent.toLowerCase();
-        const answer = item.querySelector('.faq-answer p').textContent.toLowerCase();
-        
-        if (question.includes(searchTerm) || answer.includes(searchTerm)) {
-            item.style.display = 'block';
-        } else {
-            item.style.display = 'none';
-        }
-    });
-});
-</script>
+@push('scripts')
+<script src="{{ asset('js/faq.js') }}"></script>
+@endpush
 @endsection

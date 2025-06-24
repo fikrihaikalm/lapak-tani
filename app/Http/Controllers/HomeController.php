@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Education;
 use App\Models\User;
@@ -25,15 +26,74 @@ class HomeController extends Controller
         return view('home', compact('products', 'educations', 'stats'));
     }
 
-    public function products()
+    public function products(Request $request)
     {
-        $products = Product::with('user')->latest()->paginate(12);
-        return view('products.index', compact('products'));
+        $query = Product::with(['user', 'category']);
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('name', 'LIKE', "%{$searchTerm}%")
+                  ->orWhere('description', 'LIKE', "%{$searchTerm}%");
+            });
+        }
+
+        // Category filter
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        // Sorting
+        switch ($request->sort) {
+            case 'price_low':
+                $query->orderBy('price', 'asc');
+                break;
+            case 'price_high':
+                $query->orderBy('price', 'desc');
+                break;
+            case 'popular':
+                $query->orderBy('total_sold', 'desc');
+                break;
+            default:
+                $query->latest();
+                break;
+        }
+
+        $products = $query->paginate(12)->withQueryString();
+        $categories = \App\Models\ProductCategory::all();
+
+        return view('products.index', compact('products', 'categories'));
     }
 
-    public function education()
+    public function education(Request $request)
     {
-        $educations = Education::with('user')->latest()->paginate(9);
+        $query = Education::with('user');
+
+        // Search functionality
+        if ($request->filled('search')) {
+            $searchTerm = $request->search;
+            $query->where(function($q) use ($searchTerm) {
+                $q->where('title', 'LIKE', "%{$searchTerm}%")
+                  ->orWhere('content', 'LIKE', "%{$searchTerm}%");
+            });
+        }
+
+        // Sorting
+        switch ($request->sort) {
+            case 'popular':
+                $query->orderBy('views_count', 'desc');
+                break;
+            case 'featured':
+                $query->where('is_featured', true)->latest();
+                break;
+            default:
+                $query->latest();
+                break;
+        }
+
+        $educations = $query->paginate(9)->withQueryString();
+
         return view('education.index', compact('educations'));
     }
 
@@ -52,7 +112,7 @@ class HomeController extends Controller
 
     public function productShow(Product $product)
     {
-        $product->load(['user', 'category', 'reviews.user']);
+        $product->load(['user', 'category']);
 
         $relatedProducts = Product::where('id', '!=', $product->id)
             ->where('category_id', $product->category_id)

@@ -105,7 +105,7 @@
                     
                     <div class="flex justify-between text-sm">
                         <span class="text-gray-600">Ongkos Kirim</span>
-                        <span class="font-medium text-green-600">Gratis</span>
+                        <span class="font-medium text-hijau-600">Gratis</span>
                     </div>
                     
                     <hr class="my-4">
@@ -161,8 +161,8 @@
 <div id="success-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 hidden flex items-center justify-center p-4">
     <div class="bg-white rounded-lg max-w-md w-full p-6">
         <div class="text-center">
-            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+            <div class="w-16 h-16 bg-hijau-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <svg class="w-8 h-8 text-hijau-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
                 </svg>
             </div>
@@ -182,84 +182,7 @@
     </div>
 </div>
 
-<script>
-document.getElementById('checkout-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const btn = document.getElementById('checkout-btn');
-    const text = document.getElementById('checkout-text');
-    const loading = document.getElementById('checkout-loading');
-    
-    // Show loading
-    btn.disabled = true;
-    text.classList.add('hidden');
-    loading.classList.remove('hidden');
-    
-    const formData = new FormData(this);
-    
-    fetch('/konsumen/checkout/process', {
-        method: 'POST',
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showSuccessModal(data.whatsapp_messages);
-        } else {
-            showNotification('error', data.message || 'Terjadi kesalahan');
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showNotification('error', 'Terjadi kesalahan sistem');
-    })
-    .finally(() => {
-        // Hide loading
-        btn.disabled = false;
-        text.classList.remove('hidden');
-        loading.classList.add('hidden');
-    });
-});
-
-function showSuccessModal(whatsappMessages) {
-    const modal = document.getElementById('success-modal');
-    const linksContainer = document.getElementById('whatsapp-links');
-    
-    linksContainer.innerHTML = '';
-    
-    whatsappMessages.forEach((msg, index) => {
-        const linkDiv = document.createElement('div');
-        linkDiv.innerHTML = `
-            <a href="${msg.url}" 
-               target="_blank"
-               class="block w-full bg-green-600 text-white py-3 px-4 rounded-lg hover:bg-green-700 transition duration-200 text-center">
-                💬 Chat dengan ${msg.petani_name}
-            </a>
-        `;
-        linksContainer.appendChild(linkDiv);
-    });
-    
-    modal.classList.remove('hidden');
-}
-
-function closeModal() {
-    document.getElementById('success-modal').classList.add('hidden');
-    window.location.href = '/konsumen/orders';
-}
-
-function showNotification(type, message) {
-    if (type === 'error') {
-        showError(message);
-    } else if (type === 'success') {
-        showSuccess(message);
-    } else if (type === 'warning') {
-        showWarning(message);
-    } else {
-        showInfo(message);
-    }
-}
-</script>
+@push('scripts')
+<script src="{{ asset('js/checkout.js') }}"></script>
+@endpush
 @endsection

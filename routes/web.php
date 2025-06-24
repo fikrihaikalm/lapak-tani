@@ -34,6 +34,7 @@ Route::post('/kontak', [PublicController::class, 'submitContact'])->name('contac
 Route::get('/faq', [PublicController::class, 'faq'])->name('faq');
 Route::get('/kebijakan-privasi', [PublicController::class, 'privacy'])->name('privacy');
 Route::get('/syarat-ketentuan', [PublicController::class, 'terms'])->name('terms');
+Route::get('/bantuan', [PublicController::class, 'help'])->name('help');
 
 Route::get('/direktori-petani', [PublicController::class, 'petaniDirectory'])->name('petani.directory');
 Route::get('/cari', [PublicController::class, 'search'])->name('search');
@@ -44,6 +45,9 @@ Route::get('/register', [AuthController::class, 'showRegister'])->name('register
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/register', [AuthController::class, 'register']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/logout', function() {
+    return redirect()->route('home')->with('error', 'Logout harus menggunakan form yang benar.');
+});
 
 // Global search
 Route::post('/search', [SearchController::class, 'search'])->name('search');

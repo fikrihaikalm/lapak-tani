@@ -137,11 +137,7 @@
                             </button>
                         @endif
                         
-                        @if($order->status === 'delivered')
-                            <a href="#" class="btn-primary">
-                                Beri Review
-                            </a>
-                        @endif
+
                     </div>
                 </div>
             </div>

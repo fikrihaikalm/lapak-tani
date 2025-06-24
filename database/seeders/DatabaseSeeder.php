@@ -36,12 +36,11 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'user_type' => 'petani',
             'phone' => '081234567891',
-            'address' => 'Bogor, Jawa Barat',
+            'location' => 'Bogor, Jawa Barat',
+            'address' => 'Jl. Pertanian No. 123, Bogor',
             'farm_name' => 'Kebun Segar Pak Tani',
             'bio' => 'Petani berpengalaman 15 tahun dalam budidaya sayuran organik',
             'is_verified' => true,
-            'rating' => 4.8,
-            'total_reviews' => 25,
         ]);
 
         $petani2 = User::create([
@@ -50,12 +49,11 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'user_type' => 'petani',
             'phone' => '081234567892',
-            'address' => 'Malang, Jawa Timur',
+            'location' => 'Malang, Jawa Timur',
+            'address' => 'Jl. Sayuran Hijau No. 456, Malang',
             'farm_name' => 'Taman Sayur Bu Sari',
             'bio' => 'Spesialis tanaman hidroponik dan sayuran organik',
             'is_verified' => true,
-            'rating' => 4.9,
-            'total_reviews' => 18,
         ]);
 
         // Konsumen users
@@ -65,7 +63,8 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'user_type' => 'konsumen',
             'phone' => '081234567893',
-            'address' => 'Jakarta Selatan, DKI Jakarta',
+            'location' => 'Jakarta Selatan, DKI Jakarta',
+            'address' => 'Jl. Kemang Raya No. 789, Jakarta Selatan',
         ]);
 
         $konsumen2 = User::create([
@@ -74,7 +73,8 @@ class DatabaseSeeder extends Seeder
             'password' => Hash::make('password'),
             'user_type' => 'konsumen',
             'phone' => '081234567894',
-            'address' => 'Bandung, Jawa Barat',
+            'location' => 'Bandung, Jawa Barat',
+            'address' => 'Jl. Dago No. 321, Bandung',
         ]);
 
         // Sample products
@@ -90,8 +90,6 @@ class DatabaseSeeder extends Seeder
                 'weight' => 1.0,
                 'is_organic' => true,
                 'is_featured' => true,
-                'rating' => 4.8,
-                'total_reviews' => 15,
                 'total_sold' => 85,
             ],
             [
@@ -104,8 +102,6 @@ class DatabaseSeeder extends Seeder
                 'unit' => 'paket',
                 'weight' => 0.5,
                 'is_organic' => true,
-                'rating' => 4.9,
-                'total_reviews' => 12,
                 'total_sold' => 38,
             ],
             [
@@ -118,8 +114,6 @@ class DatabaseSeeder extends Seeder
                 'unit' => 'kg',
                 'weight' => 1.0,
                 'is_organic' => true,
-                'rating' => 4.7,
-                'total_reviews' => 8,
                 'total_sold' => 42,
             ],
             [
@@ -131,8 +125,6 @@ class DatabaseSeeder extends Seeder
                 'stock' => 30,
                 'unit' => 'kg',
                 'weight' => 1.0,
-                'rating' => 4.6,
-                'total_reviews' => 6,
                 'total_sold' => 24,
             ],
         ];

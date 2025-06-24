@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
@@ -20,11 +21,10 @@ class User extends Authenticatable
         'user_type_id',
         'phone',
         'address',
+        'location',
         'avatar',
         'bio',
         'farm_name',
-        'rating',
-        'total_reviews',
         'is_verified',
         'last_active_at',
     ];
@@ -38,7 +38,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'last_active_at' => 'datetime',
-        'rating' => 'decimal:2',
+
         'is_verified' => 'boolean',
     ];
 
@@ -82,10 +82,7 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
     }
 
-    public function reviews()
-    {
-        return $this->hasMany(ProductReview::class);
-    }
+
 
     public function financialRecords()
     {
@@ -173,10 +170,7 @@ class User extends Authenticatable
         return $this->userType && $this->userType->hasPermission($permission);
     }
 
-    public function getFormattedRatingAttribute()
-    {
-        return number_format($this->rating, 1);
-    }
+
 
     public function isFollowing(User $user)
     {

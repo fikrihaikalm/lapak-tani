@@ -126,169 +126,36 @@
                         <p>&copy; {{ date('Y') }} Lapak Tani. Semua hak cipta dilindungi.</p>
                     </div>
                     <div class="flex space-x-6 text-sm">
-                        <a href="#" class="text-hijau-200 hover:text-white transition duration-200">Kebijakan Privasi</a>
-                        <a href="#" class="text-hijau-200 hover:text-white transition duration-200">Syarat & Ketentuan</a>
-                        <a href="#" class="text-hijau-200 hover:text-white transition duration-200">Bantuan</a>
+                        <a href="{{ route('privacy') }}" class="text-hijau-200 hover:text-white transition duration-200">Kebijakan Privasi</a>
+                        <a href="{{ route('terms') }}" class="text-hijau-200 hover:text-white transition duration-200">Syarat & Ketentuan</a>
+                        <a href="{{ route('help') }}" class="text-hijau-200 hover:text-white transition duration-200">Bantuan</a>
                     </div>
                 </div>
             </div>
         </div>
     </footer>
 
-    <!-- Global Search JavaScript -->
+    <!-- Core JavaScript Components -->
+    <script src="{{ asset('js/notifications.js') }}"></script>
+    <script src="{{ asset('js/search.js') }}"></script>
+    <script src="{{ asset('js/navbar.js') }}"></script>
+    <script src="{{ asset('js/social.js') }}"></script>
+    <script src="{{ asset('js/posts.js') }}"></script>
+    @auth
+        @if(auth()->user()->user_type === 'konsumen')
+            <script src="{{ asset('js/cart.js') }}"></script>
+            <script src="{{ asset('js/wishlist.js') }}"></script>
+        @endif
+    @endauth
+
+    <!-- Global Variables -->
     <script>
-    let searchTimeout;
-    const searchInput = document.getElementById('global-search');
-    const searchResults = document.getElementById('search-results');
-    const searchLoading = document.getElementById('search-loading');
-    const searchContent = document.getElementById('search-content');
-
-    if (searchInput) {
-        searchInput.addEventListener('input', function() {
-            const query = this.value.trim();
-
-            if (query.length < 2) {
-                searchResults.classList.add('hidden');
-                return;
-            }
-
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                performSearch(query);
-            }, 300);
-        });
-
-        // Hide search results when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-                searchResults.classList.add('hidden');
-            }
-        });
-    }
-
-    function performSearch(query) {
-        searchLoading.classList.remove('hidden');
-        searchContent.innerHTML = '';
-        searchResults.classList.remove('hidden');
-
-        fetch('/search', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify({ query: query })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            searchLoading.classList.add('hidden');
-            if (data.error) {
-                searchContent.innerHTML = '<div class="p-4 text-center text-red-500">' + data.error + '</div>';
-                showError(data.error);
-            } else {
-                displaySearchResults(data);
-            }
-        })
-        .catch(error => {
-            console.error('Search error:', error);
-            searchLoading.classList.add('hidden');
-            searchContent.innerHTML = '<div class="p-4 text-center text-red-500">Terjadi kesalahan saat mencari</div>';
-            showError('Terjadi kesalahan saat mencari: ' + error.message);
-        });
-    }
-
-    function displaySearchResults(data) {
-        let html = '';
-
-        // Products
-        if (data.products && data.products.length > 0) {
-            html += '<div class="p-3 border-b border-gray-200"><h4 class="font-semibold text-gray-900 mb-2">Produk</h4>';
-            data.products.forEach(product => {
-                html += `
-                    <a href="/produk/${product.slug}" class="flex items-center p-2 hover:bg-gray-50 rounded">
-                        <img src="${product.image_url}" alt="${product.name}" class="w-10 h-10 rounded object-cover mr-3">
-                        <div class="flex-1">
-                            <p class="font-medium text-gray-900">${product.name}</p>
-                            <p class="text-sm text-gray-500">${product.formatted_price} • ${product.user.name}</p>
-                        </div>
-                    </a>
-                `;
-            });
-            html += '</div>';
-        }
-
-        // Articles
-        if (data.articles && data.articles.length > 0) {
-            html += '<div class="p-3 border-b border-gray-200"><h4 class="font-semibold text-gray-900 mb-2">Artikel</h4>';
-            data.articles.forEach(article => {
-                html += `
-                    <a href="/edukasi/${article.slug}" class="flex items-center p-2 hover:bg-gray-50 rounded">
-                        <div class="w-10 h-10 bg-purple-100 rounded flex items-center justify-center mr-3">
-                            <svg class="w-5 h-5 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                            </svg>
-                        </div>
-                        <div class="flex-1">
-                            <p class="font-medium text-gray-900">${article.title}</p>
-                            <p class="text-sm text-gray-500">Oleh ${article.user.name}</p>
-                        </div>
-                    </a>
-                `;
-            });
-            html += '</div>';
-        }
-
-        // Farmers
-        if (data.farmers && data.farmers.length > 0) {
-            html += '<div class="p-3"><h4 class="font-semibold text-gray-900 mb-2">Petani</h4>';
-            data.farmers.forEach(farmer => {
-                html += `
-                    <a href="/profile/${farmer.slug}" class="flex items-center p-2 hover:bg-gray-50 rounded">
-                        <img src="${farmer.avatar_url}" alt="${farmer.name}" class="w-10 h-10 rounded-full mr-3">
-                        <div class="flex-1">
-                            <p class="font-medium text-gray-900">${farmer.name}</p>
-                            <p class="text-sm text-gray-500">${farmer.farm_name || 'Petani'}</p>
-                        </div>
-                    </a>
-                `;
-            });
-            html += '</div>';
-        }
-
-        if (html === '') {
-            html = '<div class="p-4 text-center text-gray-500">Tidak ada hasil ditemukan</div>';
-        }
-
-        searchContent.innerHTML = html;
-    }
-
-    // Alert functions
-    function showSuccess(message) {
-        const alertDiv = document.createElement('div');
-        alertDiv.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-        alertDiv.textContent = message;
-        document.body.appendChild(alertDiv);
-
-        setTimeout(() => {
-            alertDiv.remove();
-        }, 3000);
-    }
-
-    function showError(message) {
-        const alertDiv = document.createElement('div');
-        alertDiv.className = 'fixed top-4 right-4 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50';
-        alertDiv.textContent = message;
-        document.body.appendChild(alertDiv);
-
-        setTimeout(() => {
-            alertDiv.remove();
-        }, 3000);
-    }
+        window.isAuthenticated = {{ auth()->check() ? 'true' : 'false' }};
+        @auth
+            window.userType = '{{ auth()->user()->user_type }}';
+        @endauth
     </script>
+
+
 </body>
 </html>

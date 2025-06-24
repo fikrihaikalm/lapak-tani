@@ -16,19 +16,21 @@ return new class extends Migration
             $table->string('slug')->nullable()->after('title');
         });
 
-        // Populate slugs for existing products (if empty)
-        $products = \App\Models\Product::whereNull('slug')->orWhere('slug', '')->get();
-        foreach ($products as $product) {
-            $slug = \Illuminate\Support\Str::slug($product->name);
-            $originalSlug = $slug;
-            $count = 1;
+        // Populate slugs for existing products (if table has data and slug column exists)
+        if (Schema::hasColumn('products', 'slug')) {
+            $products = \App\Models\Product::whereNull('slug')->orWhere('slug', '')->get();
+            foreach ($products as $product) {
+                $slug = \Illuminate\Support\Str::slug($product->name);
+                $originalSlug = $slug;
+                $count = 1;
 
-            while (\App\Models\Product::where('slug', $slug)->where('id', '!=', $product->id)->exists()) {
-                $slug = $originalSlug . '-' . $count;
-                $count++;
+                while (\App\Models\Product::where('slug', $slug)->where('id', '!=', $product->id)->exists()) {
+                    $slug = $originalSlug . '-' . $count;
+                    $count++;
+                }
+
+                $product->update(['slug' => $slug]);
             }
-
-            $product->update(['slug' => $slug]);
         }
 
         // Populate slugs for existing educations

@@ -50,6 +50,7 @@ class AuthController extends Controller
             'password' => 'required|string|min:8|confirmed',
             'user_type' => 'required|in:petani,konsumen',
             'phone' => 'nullable|string|max:20',
+            'location' => 'nullable|string|max:100',
             'address' => 'nullable|string',
             'farm_name' => 'nullable|string|max:255',
         ]);
@@ -60,6 +61,7 @@ class AuthController extends Controller
             'password' => Hash::make($request->password),
             'user_type' => $request->user_type,
             'phone' => $request->phone,
+            'location' => $request->location,
             'address' => $request->address,
             'farm_name' => $request->farm_name,
         ]);

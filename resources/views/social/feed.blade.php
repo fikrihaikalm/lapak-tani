@@ -6,23 +6,7 @@
 <div class="bg-gray-50 min-h-screen">
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        <!-- Stories Section -->
-        @if($stories->count() > 0)
-            <div class="bg-white rounded-lg shadow mb-6 p-4">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Stories</h3>
-                <div class="flex space-x-4 overflow-x-auto">
-                    @foreach($stories as $userId => $userStories)
-                        @php $user = $userStories->first()->user; @endphp
-                        <div class="flex-shrink-0 text-center cursor-pointer" onclick="viewStory({{ $userId }})">
-                            <div class="w-16 h-16 rounded-full bg-gradient-to-r from-pink-500 to-purple-500 p-1">
-                                <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}" class="w-full h-full rounded-full border-2 border-white">
-                            </div>
-                            <p class="text-xs text-gray-600 mt-1">{{ Str::limit($user->name, 10) }}</p>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        @endif
+
 
         <!-- Create Post Section -->
         @if(auth()->user()->isPetani())
@@ -51,19 +35,9 @@
                                 </div>
                             </div>
 
-                            <div class="flex justify-between items-center mt-4">
-                                <div class="flex items-center space-x-4">
-                                    <label class="flex items-center">
-                                        <input type="radio" name="type" value="post" checked class="form-radio">
-                                        <span class="ml-2 text-sm text-gray-700">Post</span>
-                                    </label>
-                                    <label class="flex items-center">
-                                        <input type="radio" name="type" value="story" class="form-radio">
-                                        <span class="ml-2 text-sm text-gray-700">Story (24 jam)</span>
-                                    </label>
-                                </div>
+                            <div class="flex justify-end mt-4">
                                 <button type="submit" class="btn-primary">
-                                    Bagikan
+                                    Bagikan Post
                                 </button>
                             </div>
                         </div>
@@ -72,25 +46,7 @@
             </div>
         @endif
 
-        <!-- Stories Section -->
-        @if($stories->count() > 0)
-            <div class="bg-white rounded-lg shadow p-4 mb-6">
-                <h3 class="text-lg font-semibold text-gray-900 mb-4">Stories</h3>
-                <div class="flex space-x-4 overflow-x-auto pb-2">
-                    @foreach($stories as $userId => $userStories)
-                        @php $user = $userStories->first()->user; @endphp
-                        <a href="{{ route('social.stories', $user->id) }}" class="flex-shrink-0">
-                            <div class="relative">
-                                <img src="{{ $user->avatar_url }}" alt="{{ $user->name }}"
-                                     class="w-16 h-16 rounded-full border-4 border-gradient-to-r from-purple-400 to-pink-400 object-cover">
-                                <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 border-2 border-white rounded-full"></div>
-                            </div>
-                            <p class="text-xs text-center mt-2 text-gray-600 max-w-16 truncate">{{ $user->name }}</p>
-                        </a>
-                    @endforeach
-                </div>
-            </div>
-        @endif
+
 
         <!-- Posts Feed -->
         <div class="space-y-6">
@@ -139,8 +95,8 @@
                     <div class="px-6 py-3 border-t border-gray-200">
                         <div class="flex items-center justify-between">
                             <div class="flex items-center space-x-6">
-                                <button type="button" class="flex items-center space-x-2 text-gray-500 hover:text-red-500" 
-                                        onclick="likePost({{ $post->id }}, this)">
+                                <button type="button" class="flex items-center space-x-2 text-gray-500 hover:text-red-500"
+                                        onclick="SocialManager.likePost({{ $post->id }}, this)">
                                     <svg class="w-5 h-5 {{ $post->isLikedBy(auth()->user()) ? 'text-red-500' : '' }}" 
                                          fill="{{ $post->isLikedBy(auth()->user()) ? 'currentColor' : 'none' }}" 
                                          stroke="currentColor" viewBox="0 0 24 24">
@@ -149,13 +105,7 @@
                                     <span class="likes-count">{{ $post->likes_count }}</span>
                                 </button>
                                 
-                                <button type="button" class="flex items-center space-x-2 text-gray-500 hover:text-blue-500" 
-                                        onclick="toggleComments({{ $post->id }})">
-                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
-                                    </svg>
-                                    <span>{{ $post->comments_count }}</span>
-                                </button>
+
                             </div>
                             
                             <a href="{{ route('social.profile', $post->user->id) }}" class="text-hijau-600 hover:text-hijau-700 text-sm font-medium">
@@ -164,40 +114,7 @@
                         </div>
                     </div>
 
-                    <!-- Comments Section -->
-                    <div id="comments-{{ $post->id }}" class="hidden border-t border-gray-200">
-                        <div class="p-6">
-                            <!-- Comment Form -->
-                            <form onsubmit="submitComment(event, {{ $post->id }})" class="mb-4">
-                                <div class="flex space-x-3">
-                                    <img src="{{ auth()->user()->avatar_url }}" alt="{{ auth()->user()->name }}" class="w-8 h-8 rounded-full">
-                                    <div class="flex-1">
-                                        <input type="text" name="comment" placeholder="Tulis komentar..." 
-                                               class="form-input" required>
-                                    </div>
-                                    <button type="submit" class="btn-primary">
-                                        Kirim
-                                    </button>
-                                </div>
-                            </form>
 
-                            <!-- Comments List -->
-                            <div id="comments-list-{{ $post->id }}" class="space-y-3">
-                                @foreach($post->comments as $comment)
-                                    <div class="flex space-x-3">
-                                        <img src="{{ $comment->user->avatar_url }}" alt="{{ $comment->user->name }}" class="w-8 h-8 rounded-full">
-                                        <div class="flex-1">
-                                            <div class="bg-gray-100 rounded-lg px-3 py-2">
-                                                <p class="font-medium text-sm text-gray-900">{{ $comment->user->name }}</p>
-                                                <p class="text-gray-700">{{ $comment->comment }}</p>
-                                            </div>
-                                            <p class="text-xs text-gray-500 mt-1">{{ $comment->time_ago }}</p>
-                                        </div>
-                                    </div>
-                                @endforeach
-                            </div>
-                        </div>
-                    </div>
                 </div>
             @empty
                 <div class="bg-white rounded-lg shadow p-12 text-center">
@@ -222,140 +139,7 @@
     </div>
 </div>
 
-<script>
-function likePost(postId, button) {
-    fetch('/posts/like', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({ post_id: postId })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            const icon = button.querySelector('svg');
-            const countSpan = button.querySelector('.likes-count');
-            
-            if (data.action === 'liked') {
-                icon.classList.add('text-red-500');
-                icon.setAttribute('fill', 'currentColor');
-            } else {
-                icon.classList.remove('text-red-500');
-                icon.setAttribute('fill', 'none');
-            }
-            
-            countSpan.textContent = data.likes_count;
-        }
-    });
-}
-
-function toggleComments(postId) {
-    const commentsDiv = document.getElementById(`comments-${postId}`);
-    commentsDiv.classList.toggle('hidden');
-}
-
-function submitComment(event, postId) {
-    event.preventDefault();
-    
-    const form = event.target;
-    const commentInput = form.querySelector('input[name="comment"]');
-    const comment = commentInput.value.trim();
-    
-    if (!comment) return;
-    
-    fetch('/posts/comment', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({
-            post_id: postId,
-            comment: comment
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            const commentsList = document.getElementById(`comments-list-${postId}`);
-            const newComment = `
-                <div class="flex space-x-3">
-                    <img src="${data.comment.user_avatar}" alt="${data.comment.user_name}" class="w-8 h-8 rounded-full">
-                    <div class="flex-1">
-                        <div class="bg-gray-100 rounded-lg px-3 py-2">
-                            <p class="font-medium text-sm text-gray-900">${data.comment.user_name}</p>
-                            <p class="text-gray-700">${data.comment.comment}</p>
-                        </div>
-                        <p class="text-xs text-gray-500 mt-1">${data.comment.time_ago}</p>
-                    </div>
-                </div>
-            `;
-            commentsList.insertAdjacentHTML('beforeend', newComment);
-            commentInput.value = '';
-        }
-    });
-}
-
-function previewPostImages(input) {
-    const preview = document.getElementById('post-image-preview');
-    const container = document.getElementById('preview-container');
-
-    // Clear previous previews
-    container.innerHTML = '';
-
-    if (input.files && input.files.length > 0) {
-        // Limit to 5 images
-        const files = Array.from(input.files).slice(0, 5);
-
-        files.forEach((file, index) => {
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const div = document.createElement('div');
-                div.className = 'relative';
-                div.innerHTML = `
-                    <img src="${e.target.result}" alt="Preview ${index + 1}" class="w-full h-20 object-cover rounded border border-gray-300">
-                    <button type="button" onclick="removePostPreview(this, ${index})" class="absolute top-1 right-1 bg-red-500 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs hover:bg-red-600">
-                        ×
-                    </button>
-                `;
-                container.appendChild(div);
-            }
-
-            reader.readAsDataURL(file);
-        });
-
-        preview.classList.remove('hidden');
-    } else {
-        preview.classList.add('hidden');
-    }
-}
-
-function removePostPreview(button, index) {
-    const input = document.getElementById('images');
-    const preview = document.getElementById('post-image-preview');
-    const container = document.getElementById('preview-container');
-
-    // Remove the preview element
-    button.parentElement.remove();
-
-    // If no more previews, hide the container
-    if (container.children.length === 0) {
-        preview.classList.add('hidden');
-        input.value = '';
-    }
-}
-
-function removePostPreviews() {
-    const input = document.getElementById('images');
-    const preview = document.getElementById('post-image-preview');
-    const container = document.getElementById('preview-container');
-
-    input.value = '';
-    container.innerHTML = '';
-    preview.classList.add('hidden');
-}
-</script>
+@push('scripts')
+<script src="{{ asset('js/posts.js') }}"></script>
+@endpush
 @endsection

@@ -13,14 +13,13 @@ class Post extends Model
         'user_id',
         'content',
         'images',
-        'type',
-        'expires_at',
+
         'is_active',
     ];
 
     protected $casts = [
         'images' => 'array',
-        'expires_at' => 'datetime',
+
         'is_active' => 'boolean',
     ];
 
@@ -34,10 +33,7 @@ class Post extends Model
         return $this->hasMany(PostLike::class);
     }
 
-    public function comments()
-    {
-        return $this->hasMany(PostComment::class);
-    }
+
 
     public function isLikedBy(User $user)
     {
@@ -49,10 +45,7 @@ class Post extends Model
         return $this->likes()->count();
     }
 
-    public function getCommentsCountAttribute()
-    {
-        return $this->comments()->count();
-    }
+
 
     public function getTimeAgoAttribute()
     {
@@ -64,14 +57,5 @@ class Post extends Model
         return $query->where('is_active', true);
     }
 
-    public function scopePosts($query)
-    {
-        return $query->where('type', 'post');
-    }
 
-    public function scopeStories($query)
-    {
-        return $query->where('type', 'story')
-                    ->where('expires_at', '>', now());
-    }
 }

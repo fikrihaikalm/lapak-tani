@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\PostLike;
-use App\Models\PostComment;
+
 use App\Models\Follow;
 use App\Models\User;
 use App\Models\Order;
@@ -22,21 +22,12 @@ class SocialController extends Controller
         $followingIds[] = $user->id;
 
         $posts = Post::whereIn('user_id', $followingIds)
-            ->with(['user', 'likes', 'comments.user'])
-            ->posts()
+            ->with(['user', 'likes'])
             ->active()
             ->latest()
             ->paginate(10);
 
-        $stories = Post::whereIn('user_id', $followingIds)
-            ->with('user')
-            ->stories()
-            ->active()
-            ->latest()
-            ->get()
-            ->groupBy('user_id');
-
-        return view('social.feed', compact('posts', 'stories'));
+        return view('social.feed', compact('posts'));
     }
 
     public function createPost(Request $request)
@@ -44,7 +35,7 @@ class SocialController extends Controller
         $request->validate([
             'content' => 'required|string|max:1000',
             'images.*' => 'nullable|image|max:2048',
-            'type' => 'required|in:post,story',
+
         ]);
 
         $images = [];
@@ -54,22 +45,15 @@ class SocialController extends Controller
             }
         }
 
-        $expiresAt = null;
-        if ($request->type === 'story') {
-            $expiresAt = now()->addHours(24);
-        }
-
         Post::create([
             'user_id' => auth()->id(),
             'content' => $request->content,
             'images' => $images,
-            'type' => $request->type,
-            'expires_at' => $expiresAt,
         ]);
 
         return response()->json([
             'success' => true,
-            'message' => $request->type === 'story' ? 'Story berhasil dibuat!' : 'Post berhasil dibuat!',
+            'message' => 'Post berhasil dibuat!',
             'redirect' => route('social.feed')
         ]);
     }
@@ -104,33 +88,7 @@ class SocialController extends Controller
         ]);
     }
 
-    public function commentPost(Request $request)
-    {
-        $request->validate([
-            'post_id' => 'required|exists:posts,id',
-            'comment' => 'required|string|max:500',
-        ]);
 
-        $comment = PostComment::create([
-            'user_id' => auth()->id(),
-            'post_id' => $request->post_id,
-            'comment' => $request->comment,
-        ]);
-
-        $comment->load('user');
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Komentar berhasil ditambahkan!',
-            'comment' => [
-                'id' => $comment->id,
-                'comment' => $comment->comment,
-                'user_name' => $comment->user->name,
-                'user_avatar' => $comment->user->avatar_url,
-                'time_ago' => $comment->time_ago,
-            ]
-        ]);
-    }
 
     public function followUser(Request $request)
     {

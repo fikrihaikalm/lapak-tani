@@ -1,10 +1,16 @@
 @extends('layouts.app')
 
 @section('title', 'Keranjang Belanja - Lapak Tani')
-@section('page-title', 'Keranjang Belanja')
 
 @section('content')
-<div class="space-y-6">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <!-- Header Section -->
+    <div class="mb-8">
+        <h1 class="text-3xl font-bold text-gray-900">Keranjang Belanja</h1>
+        <p class="text-gray-600 mt-2">Kelola produk yang akan Anda beli</p>
+    </div>
+
+    <div class="space-y-6">
     @if($cartItems->count() > 0)
         @foreach($cartItems as $petaniId => $items)
             @php $petani = $items->first()->product->user; @endphp
@@ -52,15 +58,15 @@
 
                                 <div class="flex items-center space-x-3">
                                     <div class="flex items-center border border-gray-300 rounded-lg">
-                                        <button type="button" class="p-2 hover:bg-gray-50" onclick="updateQuantity({{ $item->id }}, {{ $item->quantity - 1 }})">
+                                        <button type="button" class="p-2 hover:bg-gray-50" onclick="CartManager.updateQuantity({{ $item->id }}, {{ $item->quantity - 1 }})">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
                                             </svg>
                                         </button>
-                                        <input type="number" value="{{ $item->quantity }}" min="1" max="{{ $item->product->stock }}" 
-                                               class="w-16 text-center border-0 focus:ring-0" 
-                                               onchange="updateQuantity({{ $item->id }}, this.value)">
-                                        <button type="button" class="p-2 hover:bg-gray-50" onclick="updateQuantity({{ $item->id }}, {{ $item->quantity + 1 }})">
+                                        <input type="number" value="{{ $item->quantity }}" min="1" max="{{ $item->product->stock }}"
+                                               class="w-16 text-center border-0 focus:ring-0"
+                                               onchange="CartManager.updateQuantity({{ $item->id }}, this.value)">
+                                        <button type="button" class="p-2 hover:bg-gray-50" onclick="CartManager.updateQuantity({{ $item->id }}, {{ $item->quantity + 1 }})">
                                             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
                                             </svg>
@@ -72,7 +78,7 @@
                                         <p class="text-sm text-gray-500">Stok: {{ $item->product->stock }}</p>
                                     </div>
 
-                                    <button type="button" class="text-red-600 hover:text-red-700 p-2" onclick="removeItem({{ $item->id }})">
+                                    <button type="button" class="text-red-600 hover:text-red-700 p-2" onclick="CartManager.removeFromCart({{ $item->id }})">
                                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                                         </svg>
@@ -137,100 +143,8 @@
             </a>
         </div>
     @endif
+    </div>
 </div>
 
-<script>
-function updateQuantity(itemId, quantity) {
-    if (quantity < 1) return;
-    
-    fetch(`/konsumen/keranjang/${itemId}`, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({ quantity: quantity })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            document.getElementById(`subtotal-${itemId}`).textContent = data.subtotal;
-            location.reload(); // Reload to update totals
-        } else {
-            alert(data.message);
-        }
-    });
-}
 
-function removeItem(itemId) {
-    if (confirm('Hapus produk dari keranjang?')) {
-        fetch(`/konsumen/keranjang/${itemId}`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            } else {
-                alert(data.message);
-            }
-        });
-    }
-}
-
-// Handle checkout form submission
-document.addEventListener('DOMContentLoaded', function() {
-    const checkoutForms = document.querySelectorAll('form[data-ajax="true"]');
-
-    checkoutForms.forEach(form => {
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const formData = new FormData(form);
-            const submitButton = form.querySelector('button[type="submit"]');
-            const originalText = submitButton.textContent;
-
-            submitButton.disabled = true;
-            submitButton.textContent = 'Memproses...';
-
-            fetch(form.action, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                },
-                body: formData
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert(data.message);
-
-                    // Open WhatsApp if URL provided
-                    if (data.whatsapp_url) {
-                        window.open(data.whatsapp_url, '_blank');
-                    }
-
-                    // Redirect to order page
-                    if (data.redirect) {
-                        window.location.href = data.redirect;
-                    }
-                } else {
-                    alert(data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Terjadi kesalahan saat memproses pesanan');
-            })
-            .finally(() => {
-                submitButton.disabled = false;
-                submitButton.textContent = originalText;
-            });
-        });
-    });
-});
-</script>
 @endsection

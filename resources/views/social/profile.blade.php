@@ -76,7 +76,7 @@
                                 </a>
                             @else
                                 <div class="flex space-x-3">
-                                    <button type="button" class="btn-primary" onclick="toggleFollow({{ $user->id }}, this)">
+                                    <button type="button" class="btn-primary" onclick="SocialManager.toggleFollow({{ $user->id }}, this)">
                                         {{ $isFollowing ? 'Unfollow' : 'Follow' }}
                                     </button>
 
@@ -98,31 +98,31 @@
             <div class="border-b border-gray-200">
                 <nav class="-mb-px flex space-x-8 px-6">
                     @if($user->isPetani())
-                        <button type="button" class="tab-button active" onclick="switchTab('posts', this)">
+                        <button type="button" class="tab-button active" onclick="SocialManager.switchTab('posts', this)">
                             Posts
                         </button>
-                        <button type="button" class="tab-button" onclick="switchTab('products', this)">
+                        <button type="button" class="tab-button" onclick="SocialManager.switchTab('products', this)">
                             Produk
                         </button>
-                        <button type="button" class="tab-button" onclick="switchTab('education', this)">
+                        <button type="button" class="tab-button" onclick="SocialManager.switchTab('education', this)">
                             Edukasi
                         </button>
                     @elseif($user->isKonsumen() && auth()->check() && auth()->id() === $user->id)
-                        <button type="button" class="tab-button active" onclick="switchTab('orders', this)">
+                        <button type="button" class="tab-button active" onclick="SocialManager.switchTab('orders', this)">
                             Pesanan
                         </button>
-                        <button type="button" class="tab-button" onclick="switchTab('wishlist', this)">
+                        <button type="button" class="tab-button" onclick="SocialManager.switchTab('wishlist', this)">
                             Wishlist
                         </button>
                     @else
-                        <button type="button" class="tab-button active" onclick="switchTab('followers', this)">
+                        <button type="button" class="tab-button active" onclick="SocialManager.switchTab('followers', this)">
                             Followers
                         </button>
                     @endif
-                    <button type="button" class="tab-button" onclick="switchTab('followers', this)">
+                    <button type="button" class="tab-button" onclick="SocialManager.switchTab('followers', this)">
                         Followers
                     </button>
-                    <button type="button" class="tab-button" onclick="switchTab('following', this)">
+                    <button type="button" class="tab-button" onclick="SocialManager.switchTab('following', this)">
                         Following
                     </button>
                 </nav>
@@ -164,8 +164,8 @@
                             <div class="px-6 py-3 border-t border-gray-200">
                                 <div class="flex items-center space-x-6">
                                     @auth
-                                        <button type="button" class="flex items-center space-x-2 text-gray-500 hover:text-red-500" 
-                                                onclick="likePost({{ $post->id }}, this)">
+                                        <button type="button" class="flex items-center space-x-2 text-gray-500 hover:text-red-500"
+                                                onclick="SocialManager.likePost({{ $post->id }}, this)">
                                             <svg class="w-5 h-5 {{ $post->isLikedBy(auth()->user()) ? 'text-red-500' : '' }}" 
                                                  fill="{{ $post->isLikedBy(auth()->user()) ? 'currentColor' : 'none' }}" 
                                                  stroke="currentColor" viewBox="0 0 24 24">
@@ -336,10 +336,10 @@
                                         <span class="text-sm text-gray-500">Stok: {{ $item->product->stock }}</span>
                                     </div>
                                     <div class="flex space-x-2">
-                                        <button type="button" class="btn-primary btn-sm flex-1" onclick="addToCart({{ $item->product->id }})">
+                                        <button type="button" class="btn-primary btn-sm flex-1" onclick="CartManager.addToCart({{ $item->product->id }})">
                                             Tambah ke Keranjang
                                         </button>
-                                        <button type="button" class="btn-secondary btn-sm" onclick="removeFromWishlist({{ $item->id }})">
+                                        <button type="button" class="btn-secondary btn-sm" onclick="WishlistManager.remove({{ $item->product->id }})">
                                             Hapus
                                         </button>
                                     </div>
@@ -382,118 +382,5 @@
 }
 </style>
 
-<script>
-function switchTab(tabName, button) {
-    // Hide all tab contents
-    document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.add('hidden');
-    });
-    
-    // Remove active class from all buttons
-    document.querySelectorAll('.tab-button').forEach(btn => {
-        btn.classList.remove('active');
-    });
-    
-    // Show selected tab and mark button as active
-    document.getElementById(tabName + '-tab').classList.remove('hidden');
-    button.classList.add('active');
-}
 
-function toggleFollow(userId, button) {
-    fetch('/follow', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({ user_id: userId })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            button.textContent = data.action === 'followed' ? 'Unfollow' : 'Follow';
-            // Update follower count
-            location.reload();
-        }
-    });
-}
-
-function likePost(postId, button) {
-    fetch('/posts/like', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({ post_id: postId })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            const icon = button.querySelector('svg');
-            const countSpan = button.querySelector('.likes-count');
-            
-            if (data.action === 'liked') {
-                icon.classList.add('text-red-500');
-                icon.setAttribute('fill', 'currentColor');
-            } else {
-                icon.classList.remove('text-red-500');
-                icon.setAttribute('fill', 'none');
-            }
-            
-            countSpan.textContent = data.likes_count;
-        }
-    });
-}
-
-function addToCart(productId) {
-    fetch('/konsumen/cart/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({
-            product_id: productId,
-            quantity: 1
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showSuccess(data.message);
-        } else {
-            showError(data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showError('Terjadi kesalahan saat menambahkan ke keranjang');
-    });
-}
-
-function removeFromWishlist(wishlistId) {
-    if (confirm('Hapus dari wishlist?')) {
-        fetch(`/konsumen/wishlist/${wishlistId}`, {
-            method: 'DELETE',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Terjadi kesalahan saat menghapus dari wishlist');
-        });
-    }
-}
-</script>
 @endsection

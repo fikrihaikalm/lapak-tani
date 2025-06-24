@@ -22,6 +22,7 @@ class ProfileController extends Controller
             'name' => 'required|string|max:255',
             'email' => ['required', 'email', Rule::unique('users')->ignore($user->id)],
             'phone' => 'nullable|string|max:20',
+            'location' => 'nullable|string|max:100',
             'address' => 'nullable|string|max:500',
             'bio' => 'nullable|string|max:500',
             'avatar' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -62,6 +63,7 @@ class ProfileController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->phone = $request->phone;
+        $user->location = $request->location;
         $user->address = $request->address;
         $user->bio = $request->bio;
 

@@ -76,6 +76,15 @@
                     @enderror
                 </div>
 
+                <div>
+                    <label for="location" class="block text-sm font-medium text-gray-700 mb-2">Lokasi</label>
+                    <input type="text" id="location" name="location" value="{{ old('location', auth()->user()->location) }}"
+                           class="form-input" placeholder="Kota, Provinsi">
+                    @error('location')
+                        <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+                    @enderror
+                </div>
+
                 @if(auth()->user()->isPetani())
                     <div>
                         <label for="farm_name" class="block text-sm font-medium text-gray-700 mb-2">Nama Kebun/Farm</label>

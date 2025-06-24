@@ -123,14 +123,14 @@
                 @if(auth()->user()->isKonsumen())
                     <div class="border-t border-gray-200 pt-6">
                         <div class="flex space-x-4">
-                            <button onclick="addToWishlist({{ $product->id }})" 
+                            <button onclick="WishlistManager.toggle({{ $product->id }}, this)"
                                     class="flex-1 bg-gray-100 text-gray-700 py-3 px-6 rounded-lg hover:bg-gray-200 transition duration-200 flex items-center justify-center">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
                                 </svg>
                                 Wishlist
                             </button>
-                            <button onclick="addToCart({{ $product->id }})" 
+                            <button onclick="CartManager.addToCart({{ $product->id }})"
                                     class="flex-1 bg-hijau-600 text-white py-3 px-6 rounded-lg hover:bg-hijau-700 transition duration-200 flex items-center justify-center">
                                 <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5-6m0 0h15M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"/>
@@ -190,56 +190,5 @@
     @endif
 </div>
 
-<script>
-function addToCart(productId) {
-    fetch('/konsumen/cart/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({
-            product_id: productId,
-            quantity: 1
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showSuccess(data.message);
-        } else {
-            showError(data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showError('Terjadi kesalahan saat menambahkan ke keranjang');
-    });
-}
 
-function addToWishlist(productId) {
-    fetch('/konsumen/wishlist/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({
-            product_id: productId
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            showSuccess(data.message);
-        } else {
-            showError(data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showError('Terjadi kesalahan saat menambahkan ke wishlist');
-    });
-}
-</script>
 @endsection
