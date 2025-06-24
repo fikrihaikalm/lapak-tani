@@ -34,8 +34,7 @@ Route::post('/kontak', [PublicController::class, 'submitContact'])->name('contac
 Route::get('/faq', [PublicController::class, 'faq'])->name('faq');
 Route::get('/kebijakan-privasi', [PublicController::class, 'privacy'])->name('privacy');
 Route::get('/syarat-ketentuan', [PublicController::class, 'terms'])->name('terms');
-Route::get('/blog', [PublicController::class, 'blog'])->name('blog');
-Route::get('/blog/{id}', [PublicController::class, 'blogPost'])->name('blog.post');
+
 Route::get('/direktori-petani', [PublicController::class, 'petaniDirectory'])->name('petani.directory');
 Route::get('/cari', [PublicController::class, 'search'])->name('search');
 

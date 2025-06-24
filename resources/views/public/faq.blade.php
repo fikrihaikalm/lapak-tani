@@ -125,6 +125,20 @@
                     <p class="text-gray-700">Pembayaran akan ditransfer ke rekening petani dalam 1-3 hari kerja setelah konsumen mengkonfirmasi penerimaan produk. Kami mendukung transfer bank dan e-wallet.</p>
                 </div>
             </div>
+
+            <div class="faq-item bg-white rounded-lg shadow border border-gray-200">
+                <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-hijau-500" onclick="toggleFAQ(this)">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-gray-900">Apa itu badge "Petani Terverifikasi" dan bagaimana cara mendapatkannya?</h3>
+                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </div>
+                </button>
+                <div class="faq-answer hidden px-6 pb-6">
+                    <p class="text-gray-700">Badge "Petani Terverifikasi" adalah tanda bahwa petani tersebut telah terpercaya dan berpengalaman. Badge ini diberikan secara otomatis kepada petani yang telah berhasil menyelesaikan <strong>20 pesanan atau lebih</strong> dengan status "delivered" (diterima konsumen). Badge ini menunjukkan kredibilitas dan kualitas layanan petani kepada calon pembeli.</p>
+                </div>
+            </div>
         </div>
     </div>
 

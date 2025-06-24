@@ -17,6 +17,7 @@ class User extends Authenticatable
         'email',
         'password',
         'user_type',
+        'user_type_id',
         'phone',
         'address',
         'avatar',
@@ -146,6 +147,30 @@ class User extends Authenticatable
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function userType()
+    {
+        return $this->belongsTo(UserType::class, 'user_type_id');
+    }
+
+    public function checkAndUpdateVerification()
+    {
+        if ($this->user_type === 'petani' && !$this->is_verified) {
+            $completedOrders = $this->orders()->where('status', 'delivered')->count();
+
+            if ($completedOrders >= 20) {
+                $this->update(['is_verified' => true]);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public function hasPermission($permission)
+    {
+        return $this->userType && $this->userType->hasPermission($permission);
     }
 
     public function getFormattedRatingAttribute()

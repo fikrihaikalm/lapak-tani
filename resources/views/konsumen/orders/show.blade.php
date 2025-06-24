@@ -268,11 +268,7 @@
                             Kembali ke Daftar Pesanan
                         </a>
                         
-                        @if($order->status === 'delivered' && !$order->items->first()->product->reviews()->where('user_id', auth()->id())->exists())
-                        <button class="w-full bg-hijau-600 text-white py-2 px-4 rounded-lg hover:bg-hijau-700 transition duration-200">
-                            Beri Ulasan
-                        </button>
-                        @endif
+
                     </div>
                 </div>
             </div>

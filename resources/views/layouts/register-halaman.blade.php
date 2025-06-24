@@ -14,7 +14,7 @@
     <main class="min-h-screen lg:h-screen lg:overflow-hidden py-4 lg:py-8">
         <!-- Konten Form Register -->
         <div class="w-full flex items-center justify-center px-4 sm:px-6 lg:px-8 h-full">
-            <div class="w-full max-w-6xl lg:max-w-5xl">
+            <div class="w-full max-w-3xl lg:max-w-3xl">
                 @yield('content')
             </div>
         </div>

@@ -7,7 +7,7 @@
     
     <title>@yield('title', 'Katalog Pertanian Lokal')</title>
 
-    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    <link rel="icon" type="image/x-icon" href="{{ asset('favicon.png') }}">
 
     
     <link rel="preconnect" href="https://fonts.bunny.net">
@@ -88,7 +88,6 @@
                         <li><a href="{{ route('about') }}" class="text-hijau-200 hover:text-white transition duration-200">Tentang Kami</a></li>
                         <li><a href="{{ route('how-it-works') }}" class="text-hijau-200 hover:text-white transition duration-200">Cara Kerja</a></li>
                         <li><a href="{{ route('testimonials') }}" class="text-hijau-200 hover:text-white transition duration-200">Testimoni</a></li>
-                        <li><a href="{{ route('blog') }}" class="text-hijau-200 hover:text-white transition duration-200">Blog</a></li>
                         <li><a href="{{ route('faq') }}" class="text-hijau-200 hover:text-white transition duration-200">FAQ</a></li>
                         <li><a href="{{ route('contact') }}" class="text-hijau-200 hover:text-white transition duration-200">Kontak</a></li>
                     </ul>

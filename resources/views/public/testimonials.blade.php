@@ -102,16 +102,13 @@
                     </div>
                     
                     <blockquote class="text-gray-700 mb-4">
-                        @php
-                            $testimonials = [
-                                "Produk selalu segar dan berkualitas. Harga juga lebih terjangkau dibanding supermarket.",
-                                "Saya suka bisa langsung berkomunikasi dengan petaninya. Mereka sangat ramah dan informatif.",
-                                "Pengiriman cepat dan packaging rapi. Sayuran sampai dalam kondisi prima.",
-                                "Platform ini memudahkan saya mendukung petani lokal sambil mendapat produk berkualitas.",
-                                "Varietas produk banyak dan selalu ada yang baru. Anak-anak jadi suka makan sayur!"
-                            ];
-                        @endphp
-                        "{{ $testimonials[array_rand($testimonials)] }}"
+                        @if($customer->completed_orders >= 10)
+                            "Sudah {{ $customer->completed_orders }} kali belanja di sini. Produk selalu segar dan berkualitas!"
+                        @elseif($customer->completed_orders >= 5)
+                            "Setelah {{ $customer->completed_orders }} pesanan, saya sangat puas dengan layanan dan kualitas produknya."
+                        @else
+                            "Baru {{ $customer->completed_orders }} kali belanja tapi sudah merasa cocok dengan platform ini."
+                        @endif
                     </blockquote>
                     
                     <div class="text-center bg-blue-50 rounded-lg p-3">

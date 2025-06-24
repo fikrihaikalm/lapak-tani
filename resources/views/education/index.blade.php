@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     </div>
-                    <a href="{{ route('education.show', $education->id) }}" class="btn-primary w-full text-center">
+                    <a href="{{ route('education.show', $education->slug) }}" class="btn-primary w-full text-center">
                         Baca Selengkapnya
                     </a>
                 </div>

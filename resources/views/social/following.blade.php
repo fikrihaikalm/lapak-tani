@@ -7,7 +7,7 @@
     <!-- Header -->
     <div class="mb-8">
         <div class="flex items-center space-x-4 mb-4">
-            <a href="{{ route('social.profile', $user->id) }}" class="text-hijau-600 hover:text-hijau-700">
+            <a href="{{ route('social.profile', $user->slug ?: $user->id) }}" class="text-hijau-600 hover:text-hijau-700">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>

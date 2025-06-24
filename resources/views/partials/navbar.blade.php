@@ -57,9 +57,7 @@
                             <a href="{{ route('testimonials') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-hijau-600">
                                 Testimoni
                             </a>
-                            <a href="{{ route('blog') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-hijau-600">
-                                Blog
-                            </a>
+
                             <a href="{{ route('faq') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-hijau-600">
                                 FAQ
                             </a>

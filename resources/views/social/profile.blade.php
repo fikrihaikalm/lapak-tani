@@ -32,10 +32,12 @@
                         
                         <!-- Stats -->
                         <div class="flex items-center space-x-6 mb-4">
-                            <div class="text-center">
-                                <p class="text-xl font-bold text-gray-900">{{ $stats['posts_count'] }}</p>
-                                <p class="text-sm text-gray-500">Posts</p>
-                            </div>
+                            @if($user->isPetani())
+                                <div class="text-center">
+                                    <p class="text-xl font-bold text-gray-900">{{ $stats['posts_count'] }}</p>
+                                    <p class="text-sm text-gray-500">Posts</p>
+                                </div>
+                            @endif
                             <div class="text-center">
                                 <p class="text-xl font-bold text-gray-900">{{ $stats['followers_count'] }}</p>
                                 <p class="text-sm text-gray-500">Followers</p>
@@ -95,10 +97,10 @@
         <div class="bg-white rounded-lg shadow mb-6">
             <div class="border-b border-gray-200">
                 <nav class="-mb-px flex space-x-8 px-6">
-                    <button type="button" class="tab-button active" onclick="switchTab('posts', this)">
-                        Posts
-                    </button>
                     @if($user->isPetani())
+                        <button type="button" class="tab-button active" onclick="switchTab('posts', this)">
+                            Posts
+                        </button>
                         <button type="button" class="tab-button" onclick="switchTab('products', this)">
                             Produk
                         </button>
@@ -106,13 +108,23 @@
                             Edukasi
                         </button>
                     @elseif($user->isKonsumen() && auth()->check() && auth()->id() === $user->id)
-                        <button type="button" class="tab-button" onclick="switchTab('orders', this)">
+                        <button type="button" class="tab-button active" onclick="switchTab('orders', this)">
                             Pesanan
                         </button>
                         <button type="button" class="tab-button" onclick="switchTab('wishlist', this)">
                             Wishlist
                         </button>
+                    @else
+                        <button type="button" class="tab-button active" onclick="switchTab('followers', this)">
+                            Followers
+                        </button>
                     @endif
+                    <button type="button" class="tab-button" onclick="switchTab('followers', this)">
+                        Followers
+                    </button>
+                    <button type="button" class="tab-button" onclick="switchTab('following', this)">
+                        Following
+                    </button>
                 </nav>
             </div>
         </div>

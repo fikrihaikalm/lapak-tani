@@ -50,6 +50,19 @@ class OrderController extends Controller
             'delivered_at' => $request->status === 'delivered' ? now() : $order->delivered_at,
         ]);
 
+        // Check for verification if order is delivered
+        if ($request->status === 'delivered') {
+            $petani = auth()->user();
+            $wasVerified = $petani->checkAndUpdateVerification();
+
+            if ($wasVerified) {
+                // Add verification message to WhatsApp
+                $message .= "\n\n🎉 *SELAMAT!* 🎉\n";
+                $message .= "Anda telah mencapai 20 penjualan berhasil dan sekarang *TERVERIFIKASI*!\n";
+                $message .= "Badge verifikasi akan muncul di profil Anda. 🏆";
+            }
+        }
+
         // Generate WhatsApp message untuk update status
         $message = $this->generateStatusUpdateMessage($order, $request->payment_info);
         $customerPhone = $this->formatPhoneNumber($order->phone);

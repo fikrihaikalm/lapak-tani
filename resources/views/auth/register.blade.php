@@ -3,6 +3,16 @@
 @section('title', 'Daftar - Lapak Tani')
 
 @section('content')
+<!-- Back Button -->
+<div class="mb-4">
+    <a href="{{ route('home') }}" class="inline-flex items-center text-hijau-600 hover:text-hijau-700 transition duration-200">
+        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Kembali ke Beranda
+    </a>
+</div>
+
 <div class="bg-white rounded-2xl shadow-xl w-full lg:h-full lg:overflow-y-auto">
     <div class="p-6 lg:p-8">
     <!-- Header -->
