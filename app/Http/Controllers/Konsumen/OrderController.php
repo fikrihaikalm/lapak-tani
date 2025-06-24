@@ -97,7 +97,7 @@ class OrderController extends Controller
             DB::commit();
 
             // Generate WhatsApp URL
-            $petaniPhone = $this->formatPhoneNumber($order->petani->phone ?? '081234567890');
+            $petaniPhone = \App\Helpers\PhoneHelper::formatForWhatsApp($order->petani->phone ?? '082229740385');
             $whatsappUrl = "https://wa.me/{$petaniPhone}?text=" . urlencode($order->whatsapp_message);
 
             return response()->json([
@@ -155,8 +155,10 @@ class OrderController extends Controller
 
         // Convert to international format
         if (substr($phone, 0, 1) === '0') {
+            // Remove leading 0 and add 62
             $phone = '62' . substr($phone, 1);
         } elseif (substr($phone, 0, 2) !== '62') {
+            // If doesn't start with 62, add it
             $phone = '62' . $phone;
         }
 

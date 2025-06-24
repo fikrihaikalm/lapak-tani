@@ -110,7 +110,7 @@
                         @endif
                     </div>
                     <div>
-                        <a href="{{ route('social.profile', $product->user->slug ?: $product->user->id) }}"
+                        <a href="{{ route('petani.profile', $product->user->slug ?: $product->user->id) }}"
                            class="text-hijau-600 hover:text-hijau-700 text-sm font-medium">
                             Lihat Profil
                         </a>

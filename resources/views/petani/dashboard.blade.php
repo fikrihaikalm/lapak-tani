@@ -90,12 +90,7 @@
                 <h4 class="text-sm font-medium text-gray-900 text-center">Catat Keuangan</h4>
             </a>
 
-            <a href="{{ route('social.feed') }}" class="flex flex-col items-center p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition duration-200">
-                <div class="p-2 bg-blue-100 rounded-lg mb-3">
-                    <i class="fas fa-comments text-xl text-blue-600"></i>
-                </div>
-                <h4 class="text-sm font-medium text-gray-900 text-center">Buat Post</h4>
-            </a>
+
         </div>
     </div>
     

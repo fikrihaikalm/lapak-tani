@@ -19,8 +19,8 @@
                         <img src="{{ $product->image_url }}" alt="{{ $product->name }}" class="w-full h-48 object-cover rounded-t-lg">
                         
                         <!-- Wishlist Button -->
-                        <button type="button" class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50" 
-                                onclick="removeFromWishlist({{ $wishlistItem->id }})">
+                        <button type="button" class="absolute top-3 right-3 p-2 bg-white rounded-full shadow-md hover:bg-gray-50"
+                                onclick="WishlistManager.remove({{ $product->id }})">
                             <i class="bi bi-heart-fill text-red-500"></i>
                         </button>
 
@@ -79,7 +79,7 @@
                         <!-- Actions -->
                         <div class="space-y-2">
                             @if($product->stock > 0)
-                                <button type="button" class="w-full btn-primary" onclick="addToCart({{ $product->id }})">
+                                <button type="button" class="w-full btn-primary" onclick="CartManager.addToCart({{ $product->id }}, 1)">
                                     <i class="bi bi-cart mr-2"></i>
                                     Tambah ke Keranjang
                                 </button>
@@ -88,8 +88,8 @@
                                     Stok Habis
                                 </button>
                             @endif
-                            
-                            <button type="button" class="w-full btn-secondary" onclick="removeFromWishlist({{ $wishlistItem->id }})">
+
+                            <button type="button" class="w-full btn-secondary" onclick="WishlistManager.remove({{ $product->id }})">
                                 Hapus dari Wishlist
                             </button>
                         </div>
@@ -117,61 +117,5 @@
     </div>
 </div>
 
-<script>
-function addToCart(productId) {
-    fetch('/konsumen/cart/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({
-            product_id: productId,
-            quantity: 1
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Update cart count in navigation
-            const cartCount = document.querySelector('.absolute.-top-2.-right-2');
-            if (cartCount) {
-                cartCount.textContent = data.cart_count;
-            }
-
-            // Show success message
-            showSuccess(data.message);
-        } else {
-            showError(data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showError('Terjadi kesalahan saat menambahkan ke keranjang');
-    });
-}
-
-function removeFromWishlist(wishlistId) {
-    if (confirm('Hapus produk dari wishlist?')) {
-        fetch(`/konsumen/wishlist/${wishlistId}`, {
-            method: 'DELETE',
-            headers: {
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                location.reload();
-            } else {
-                alert(data.message);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Terjadi kesalahan saat menghapus dari wishlist');
-        });
-    }
-}
-</script>
+{{-- JavaScript functionality handled by external files: cart.js and wishlist.js --}}
 @endsection

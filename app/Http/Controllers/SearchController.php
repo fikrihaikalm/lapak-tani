@@ -29,8 +29,10 @@ class SearchController extends Controller
                 return [
                     'id' => $product->id,
                     'name' => $product->name,
+                    'slug' => $product->slug,
                     'formatted_price' => $product->formatted_price,
                     'image_url' => $product->image_url,
+                    'url' => route('product.show', $product->slug),
                     'user' => [
                         'name' => $product->user->name
                     ]
@@ -47,6 +49,8 @@ class SearchController extends Controller
                 return [
                     'id' => $article->id,
                     'title' => $article->title,
+                    'slug' => $article->slug,
+                    'url' => route('education.show', $article->slug),
                     'user' => [
                         'name' => $article->user->name
                     ]
@@ -66,7 +70,8 @@ class SearchController extends Controller
                     'id' => $farmer->id,
                     'name' => $farmer->name,
                     'farm_name' => $farmer->farm_name,
-                    'avatar_url' => $farmer->avatar_url
+                    'avatar_url' => $farmer->avatar_url,
+                    'url' => route('petani.profile', $farmer->slug ?: $farmer->id)
                 ];
             });
 

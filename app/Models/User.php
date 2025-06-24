@@ -52,14 +52,16 @@ class User extends Authenticatable
         return $this->hasMany(Education::class);
     }
 
-    public function posts()
-    {
-        return $this->hasMany(Post::class);
-    }
+
 
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function petaniOrders()
+    {
+        return $this->hasMany(Order::class, 'petani_id');
     }
 
     public function cartItems()
@@ -72,15 +74,7 @@ class User extends Authenticatable
         return $this->hasMany(Wishlist::class);
     }
 
-    public function followers()
-    {
-        return $this->belongsToMany(User::class, 'follows', 'following_id', 'follower_id');
-    }
 
-    public function following()
-    {
-        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'following_id');
-    }
 
 
 
@@ -105,7 +99,24 @@ class User extends Authenticatable
     // Helper methods
     public function getAvatarUrlAttribute()
     {
-        return $this->avatar ? asset('storage/' . $this->avatar) : 'https://ui-avatars.com/api/?name=' . urlencode($this->name) . '&background=16a34a&color=fff';
+        if ($this->avatar) {
+            return asset('storage/' . $this->avatar);
+        }
+
+        // Generate default avatar based on user type
+        $backgroundColor = $this->user_type === 'petani' ? '16a34a' : '3b82f6';
+        $initials = $this->getInitials();
+
+        return 'https://ui-avatars.com/api/?name=' . urlencode($initials) . '&background=' . $backgroundColor . '&color=fff&size=128';
+    }
+
+    public function getInitials()
+    {
+        $words = explode(' ', trim($this->name));
+        if (count($words) >= 2) {
+            return strtoupper(substr($words[0], 0, 1) . substr($words[1], 0, 1));
+        }
+        return strtoupper(substr($this->name, 0, 2));
     }
 
     protected static function boot()
@@ -172,42 +183,5 @@ class User extends Authenticatable
 
 
 
-    public function isFollowing(User $user)
-    {
-        return $this->following()->where('following_id', $user->id)->exists();
-    }
 
-    public function follow($userId)
-    {
-        if ($userId == $this->id) {
-            return false; // Can't follow yourself
-        }
-
-        if (!$this->following()->where('following_id', $userId)->exists()) {
-            $this->following()->attach($userId);
-            return true;
-        }
-
-        return false;
-    }
-
-    public function unfollow($userId)
-    {
-        if ($this->following()->where('following_id', $userId)->exists()) {
-            $this->following()->detach($userId);
-            return true;
-        }
-
-        return false;
-    }
-
-    public function getFollowersCountAttribute()
-    {
-        return $this->followers()->count();
-    }
-
-    public function getFollowingCountAttribute()
-    {
-        return $this->following()->count();
-    }
 }

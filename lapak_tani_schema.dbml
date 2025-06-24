@@ -1,0 +1,279 @@
+// Lapak Tani Database Schema
+// Generated for ERD creation
+// Platform: Laravel-based Agricultural Marketplace
+
+Project lapak_tani {
+  database_type: 'MySQL'
+  Note: '''
+    # Lapak Tani - Agricultural Marketplace Platform
+    
+    Platform digital yang menghubungkan petani lokal dengan konsumen,
+    sekaligus menyediakan edukasi pertanian untuk menciptakan 
+    ekosistem pertanian yang berkelanjutan.
+    
+    ## Features:
+    - User Management (Petani & Konsumen)
+    - Product Marketplace
+    - Educational Content
+    - Social Features
+    - E-commerce (Cart, Orders, Wishlist)
+    - Financial Records for Farmers
+  '''
+}
+
+// ===== CORE TABLES =====
+
+Table users {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  slug varchar(255) [unique]
+  email varchar(255) [unique, not null]
+  email_verified_at timestamp
+  password varchar(255) [not null]
+  user_type enum('konsumen', 'petani') [not null, default: 'konsumen']
+  user_type_id bigint [ref: > user_types.id]
+  phone varchar(20)
+  address text
+  location varchar(255)
+  avatar varchar(255)
+  bio text
+  farm_name varchar(255) [note: 'Only for petani users']
+  is_verified boolean [default: false, note: 'Auto-verified after 20 successful orders for petani']
+  last_active_at timestamp
+  remember_token varchar(100)
+  created_at timestamp
+  updated_at timestamp
+  
+  Note: 'Main user table supporting both farmers (petani) and consumers (konsumen)'
+}
+
+Table user_types {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  slug varchar(255) [unique, not null]
+  description text
+  permissions json [note: 'JSON array of permissions']
+  color varchar(7) [note: 'Hex color code for UI']
+  icon varchar(255) [note: 'Icon class name']
+  is_active boolean [default: true]
+  sort_order int [default: 0]
+  created_at timestamp
+  updated_at timestamp
+  
+  Note: 'Flexible user type system for scalability'
+}
+
+Table password_reset_tokens {
+  email varchar(255) [pk]
+  token varchar(255) [not null]
+  created_at timestamp
+  
+  Note: 'Laravel default password reset functionality'
+}
+
+Table personal_access_tokens {
+  id bigint [pk, increment]
+  tokenable_type varchar(255) [not null]
+  tokenable_id bigint [not null]
+  name varchar(255) [not null]
+  token varchar(64) [unique, not null]
+  abilities text
+  last_used_at timestamp
+  expires_at timestamp
+  created_at timestamp
+  updated_at timestamp
+  
+  Note: 'Laravel Sanctum API tokens'
+}
+
+Table failed_jobs {
+  id bigint [pk, increment]
+  uuid varchar(255) [unique, not null]
+  connection text [not null]
+  queue text [not null]
+  payload longtext [not null]
+  exception longtext [not null]
+  failed_at timestamp [default: `CURRENT_TIMESTAMP`]
+  
+  Note: 'Laravel failed jobs queue'
+}
+
+// ===== PRODUCT SYSTEM =====
+
+Table product_categories {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  slug varchar(255) [unique, not null]
+  description text
+  image_path varchar(255)
+  is_active boolean [default: true]
+  sort_order int [default: 0]
+  created_at timestamp
+  updated_at timestamp
+  
+  Note: 'Product categorization system'
+}
+
+Table products {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, not null, note: 'Product owner (petani)']
+  category_id bigint [ref: > product_categories.id]
+  name varchar(255) [not null]
+  slug varchar(255) [unique, not null]
+  description text [not null]
+  price decimal(10,2) [not null]
+  stock int [not null, default: 0]
+  unit varchar(50) [not null, default: 'kg', note: 'Unit of measurement (kg, pcs, etc)']
+  weight decimal(8,2) [note: 'Product weight in kg']
+  is_organic boolean [default: false]
+  is_featured boolean [default: false]
+  total_sold int [default: 0, note: 'Total quantity sold']
+  image_path varchar(255)
+  additional_images json [note: 'Array of additional product images']
+  created_at timestamp
+  updated_at timestamp
+  
+  Note: 'Product listings by farmers'
+}
+
+// ===== E-COMMERCE SYSTEM =====
+
+Table cart_items {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, not null]
+  product_id bigint [ref: > products.id, not null]
+  quantity int [not null, default: 1]
+  created_at timestamp
+  updated_at timestamp
+  
+  Note: 'Shopping cart functionality'
+}
+
+Table wishlist_items {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, not null]
+  product_id bigint [ref: > products.id, not null]
+  created_at timestamp
+  updated_at timestamp
+  
+  Note: 'User wishlist functionality'
+}
+
+Table orders {
+  id bigint [pk, increment]
+  order_number varchar(255) [unique, not null]
+  user_id bigint [ref: > users.id, not null, note: 'Customer (konsumen)']
+  petani_id bigint [ref: > users.id, not null, note: 'Farmer (petani)']
+  total_amount decimal(10,2) [not null]
+  status enum('pending', 'confirmed', 'processing', 'shipped', 'delivered', 'cancelled') [default: 'pending']
+  shipping_address text [not null]
+  phone varchar(20) [not null]
+  notes text
+  confirmed_at timestamp
+  shipped_at timestamp
+  delivered_at timestamp
+  created_at timestamp
+  updated_at timestamp
+  
+  Note: 'Order management system'
+}
+
+Table order_items {
+  id bigint [pk, increment]
+  order_id bigint [ref: > orders.id, not null]
+  product_id bigint [ref: > products.id, not null]
+  product_name varchar(255) [not null, note: 'Snapshot of product name']
+  product_price decimal(10,2) [not null, note: 'Snapshot of product price']
+  quantity int [not null]
+  subtotal decimal(10,2) [not null]
+  created_at timestamp
+  updated_at timestamp
+  
+  Note: 'Individual items within an order'
+}
+
+// ===== EDUCATION SYSTEM =====
+
+Table education_categories {
+  id bigint [pk, increment]
+  name varchar(255) [not null]
+  slug varchar(255) [unique, not null]
+  description text
+  is_active boolean [default: true]
+  sort_order int [default: 0]
+  created_at timestamp
+  updated_at timestamp
+  
+  Note: 'Educational content categorization'
+}
+
+Table educations {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, not null, note: 'Content creator (usually petani)']
+  category_id bigint [ref: > education_categories.id]
+  title varchar(255) [not null]
+  slug varchar(255) [unique, not null]
+  content longtext [not null]
+  excerpt text
+  featured_image varchar(255)
+  is_featured boolean [default: false]
+  views_count int [default: 0]
+  image_path varchar(255)
+  created_at timestamp
+  updated_at timestamp
+  
+  Note: 'Educational content about agriculture'
+}
+
+// ===== SOCIAL FEATURES REMOVED =====
+// Feed, posts, likes, and follow features have been removed
+// for simplified user experience and reduced complexity
+
+// ===== FINANCIAL SYSTEM =====
+
+Table financial_records {
+  id bigint [pk, increment]
+  user_id bigint [ref: > users.id, not null, note: 'Farmer (petani) only']
+  type enum('income', 'expense') [not null]
+  category varchar(255) [not null]
+  amount decimal(10,2) [not null]
+  description text
+  date date [not null]
+  created_at timestamp
+  updated_at timestamp
+  
+  Note: 'Financial tracking for farmers'
+}
+
+// ===== INDEXES =====
+
+Table indexes {
+  Note: '''
+    Recommended indexes for performance:
+    
+    users:
+    - INDEX(email)
+    - INDEX(user_type)
+    - INDEX(slug)
+    - INDEX(is_verified)
+    
+    products:
+    - INDEX(user_id)
+    - INDEX(category_id)
+    - INDEX(slug)
+    - INDEX(is_featured)
+    - INDEX(is_organic)
+    - INDEX(stock)
+    
+    orders:
+    - INDEX(user_id)
+    - INDEX(petani_id)
+    - INDEX(status)
+    - INDEX(order_number)
+    
+    financial_records:
+    - INDEX(user_id)
+    - INDEX(type)
+    - INDEX(date)
+  '''
+}

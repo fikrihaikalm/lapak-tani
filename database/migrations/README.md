@@ -69,9 +69,9 @@ These migrations were created during development and can be safely ignored for n
 - `education_categories` - Education categorization
 
 ### Social Features:
-- `posts` - User posts/updates
-- `post_likes` - Post likes
-- `follows` - User following system
+- ~~`posts` - User posts/updates~~ (REMOVED)
+- ~~`post_likes` - Post likes~~ (REMOVED)
+- ~~`follows` - User following system~~ (REMOVED)
 
 ### E-commerce:
 - `cart_items` - Shopping cart

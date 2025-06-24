@@ -9,6 +9,20 @@ use Illuminate\Validation\Rule;
 
 class ProfileController extends Controller
 {
+    public function show()
+    {
+        $user = auth()->user();
+
+        // Get user statistics
+        $stats = [
+            'products_count' => $user->products()->count(),
+            'orders_count' => $user->isPetani() ? $user->petaniOrders()->count() : $user->orders()->count(),
+            'educations_count' => $user->isPetani() ? $user->educations()->count() : 0,
+        ];
+
+        return view('profile.show', compact('user', 'stats'));
+    }
+
     public function edit()
     {
         return view('profile.edit');
@@ -78,7 +92,7 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('social.profile', $user->id)
+        return redirect()->route('profile.show')
                         ->with('success', 'Profile berhasil diperbarui!');
     }
 }

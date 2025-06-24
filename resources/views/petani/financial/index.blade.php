@@ -155,7 +155,7 @@ function deleteRecord(id) {
             if (data.success) {
                 location.reload();
             } else {
-                alert(data.message);
+                showError(data.message || 'Terjadi kesalahan saat menghapus catatan');
             }
         });
     }

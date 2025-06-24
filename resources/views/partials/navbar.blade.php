@@ -30,12 +30,7 @@
                     Petani
                 </a>
 
-                @auth
-                    <a href="{{ route('social.feed') }}"
-                       class="nav-link {{ request()->routeIs('social.*') ? 'active' : '' }}">
-                        Feed
-                    </a>
-                @endauth
+
 
                 <!-- Dropdown Menu -->
                 <div class="relative group">
@@ -176,7 +171,7 @@
 
                         <div class="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50">
                             <div class="py-2">
-                                <a href="{{ route('social.profile', auth()->id()) }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-hijau-600">
+                                <a href="{{ route('profile.show') }}" class="block px-4 py-2 text-gray-700 hover:bg-gray-50 hover:text-hijau-600">
                                     Profil Saya
                                 </a>
                                 @if(auth()->user()->isPetani())
@@ -219,7 +214,6 @@
             <a href="{{ route('contact') }}" class="mobile-nav-link">Kontak</a>
 
             @auth
-                <a href="{{ route('social.feed') }}" class="mobile-nav-link">Feed</a>
                 @if(auth()->user()->isKonsumen())
                     <a href="{{ route('konsumen.wishlist.index') }}" class="mobile-nav-link">Wishlist</a>
                     <a href="{{ route('konsumen.cart.index') }}" class="mobile-nav-link">Keranjang</a>
@@ -244,44 +238,4 @@
 }
 </style>
 
-<script>
-// Mobile menu toggle
-document.addEventListener('DOMContentLoaded', function() {
-    const mobileMenuButton = document.querySelector('.mobile-menu-button');
-    const mobileMenu = document.querySelector('.mobile-menu');
-
-    if (mobileMenuButton && mobileMenu) {
-        mobileMenuButton.addEventListener('click', function() {
-            mobileMenu.classList.toggle('hidden');
-        });
-    }
-
-    // Search toggle
-    const searchToggle = document.getElementById('search-toggle');
-    const searchBox = document.getElementById('search-box');
-    const searchInput = document.getElementById('global-search');
-
-    if (searchToggle && searchBox) {
-        searchToggle.addEventListener('click', function() {
-            searchBox.classList.toggle('hidden');
-            if (!searchBox.classList.contains('hidden')) {
-                searchInput.focus();
-            }
-        });
-
-        // Close search when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!searchToggle.contains(e.target) && !searchBox.contains(e.target)) {
-                searchBox.classList.add('hidden');
-            }
-        });
-
-        // Close search on escape key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                searchBox.classList.add('hidden');
-            }
-        });
-    }
-});
-</script>
+{{-- JavaScript moved to external file: public/js/navbar.js --}}

@@ -84,7 +84,7 @@ class CheckoutController extends Controller
 
                 // Generate WhatsApp message
                 $message = $this->generateWhatsAppMessage($order, $items);
-                $petaniPhone = $this->formatPhoneNumber($petani->phone ?? '081234567890');
+                $petaniPhone = \App\Helpers\PhoneHelper::formatForWhatsApp($petani->phone ?? '082229740385');
                 $whatsappUrl = "https://wa.me/{$petaniPhone}?text=" . urlencode($message);
                 
                 $whatsappMessages[] = [
@@ -174,8 +174,10 @@ class CheckoutController extends Controller
 
         // Convert to international format
         if (substr($phone, 0, 1) === '0') {
+            // Remove leading 0 and add 62
             $phone = '62' . substr($phone, 1);
         } elseif (substr($phone, 0, 2) !== '62') {
+            // If doesn't start with 62, add it
             $phone = '62' . $phone;
         }
 

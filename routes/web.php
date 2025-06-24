@@ -6,7 +6,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PublicController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SearchController;
-use App\Http\Controllers\SocialController;
+
 use App\Http\Controllers\Petani\DashboardController as PetaniDashboardController;
 use App\Http\Controllers\Petani\ProductController as PetaniProductController;
 use App\Http\Controllers\Petani\EducationController as PetaniEducationController;
@@ -37,7 +37,7 @@ Route::get('/syarat-ketentuan', [PublicController::class, 'terms'])->name('terms
 Route::get('/bantuan', [PublicController::class, 'help'])->name('help');
 
 Route::get('/direktori-petani', [PublicController::class, 'petaniDirectory'])->name('petani.directory');
-Route::get('/cari', [PublicController::class, 'search'])->name('search');
+Route::get('/cari', [PublicController::class, 'search'])->name('search.page');
 
 // Auth routes
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
@@ -49,35 +49,21 @@ Route::get('/logout', function() {
     return redirect()->route('home')->with('error', 'Logout harus menggunakan form yang benar.');
 });
 
-// Global search
-Route::post('/search', [SearchController::class, 'search'])->name('search');
+// Global search API
+Route::post('/search', [SearchController::class, 'search'])->name('search.api');
 
 // Social features (authenticated users)
 Route::middleware('auth')->group(function () {
     // Profile routes
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile/update', [ProfileController::class, 'update'])->name('profile.update');
-
-    // Social routes
-    Route::get('/feed', [SocialController::class, 'feed'])->name('social.feed');
-    Route::post('/posts', [SocialController::class, 'createPost'])->name('social.posts.create');
-    Route::post('/posts/like', [SocialController::class, 'likePost'])->name('social.posts.like');
-    Route::post('/posts/comment', [SocialController::class, 'commentPost'])->name('social.posts.comment');
-    Route::post('/follow', [SocialController::class, 'followUser'])->name('social.follow');
-    Route::get('/profile/{user:slug}', [SocialController::class, 'userProfile'])->name('social.profile');
-    Route::get('/stories/{user}', [SocialController::class, 'viewStories'])->name('social.stories');
-
-    // Follow system
-    Route::post('/follow/{user}', [\App\Http\Controllers\FollowController::class, 'follow'])->name('follow');
-    Route::post('/unfollow/{user}', [\App\Http\Controllers\FollowController::class, 'unfollow'])->name('unfollow');
-    Route::get('/profile/{user}/followers', [\App\Http\Controllers\FollowController::class, 'followers'])->name('social.followers');
-    Route::get('/profile/{user}/following', [\App\Http\Controllers\FollowController::class, 'following'])->name('social.following');
 });
 
 // Konsumen routes
 Route::middleware(['auth', 'konsumen'])->prefix('konsumen')->name('konsumen.')->group(function () {
     Route::get('/dashboard', function() {
-        return redirect()->route('social.profile', auth()->user()->slug);
+        return redirect()->route('profile.show');
     })->name('dashboard');
 
     // Cart routes
@@ -135,3 +121,6 @@ Route::middleware(['auth', 'petani'])->prefix('petani')->name('petani.')->group(
     Route::get('/pesanan/{id}', [PetaniOrderController::class, 'show'])->name('orders.show');
     Route::post('/pesanan/{id}/status', [PetaniOrderController::class, 'updateStatus'])->name('orders.updateStatus');
 });
+
+// Public petani profile (must be after petani routes to avoid conflicts)
+Route::get('/petani/{user:slug}', [PublicController::class, 'petaniProfile'])->name('petani.profile');

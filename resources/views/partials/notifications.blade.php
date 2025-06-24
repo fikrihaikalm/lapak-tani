@@ -178,35 +178,4 @@ window.showInfo = function(message) {
 };
 </script>
 
-<style>
-/* Custom animations for notifications */
-@keyframes slideInRight {
-    from {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-    to {
-        transform: translateX(0);
-        opacity: 1;
-    }
-}
-
-@keyframes slideOutRight {
-    from {
-        transform: translateX(0);
-        opacity: 1;
-    }
-    to {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-}
-
-.notification-enter {
-    animation: slideInRight 0.3s ease-out;
-}
-
-.notification-exit {
-    animation: slideOutRight 0.3s ease-in;
-}
-</style>
+{{-- Notification animations moved to resources/css/app.css --}}

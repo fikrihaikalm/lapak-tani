@@ -173,9 +173,10 @@ function cancelOrder(orderId) {
         .then(response => response.json())
         .then(data => {
             if (data.success) {
-                location.reload();
+                showSuccess('Pesanan berhasil dibatalkan');
+                setTimeout(() => location.reload(), 1500);
             } else {
-                alert(data.message);
+                showError(data.message || 'Terjadi kesalahan saat membatalkan pesanan');
             }
         });
     }

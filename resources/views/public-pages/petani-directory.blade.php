@@ -45,7 +45,7 @@
                         <option value="">Urutkan</option>
                         <option value="rating" {{ request('sort') == 'rating' ? 'selected' : '' }}>Rating Tertinggi</option>
                         <option value="products" {{ request('sort') == 'products' ? 'selected' : '' }}>Produk Terbanyak</option>
-                        <option value="followers" {{ request('sort') == 'followers' ? 'selected' : '' }}>Followers Terbanyak</option>
+
                     </select>
                 </form>
             </div>
@@ -89,12 +89,8 @@
                             <p class="text-xs text-gray-500">Produk</p>
                         </div>
                         <div>
-                            <p class="text-lg font-semibold text-gray-900">{{ $farmer->followers_count }}</p>
-                            <p class="text-xs text-gray-500">Followers</p>
-                        </div>
-                        <div>
-                            <p class="text-lg font-semibold text-gray-900">{{ $farmer->total_reviews ?? 0 }}</p>
-                            <p class="text-xs text-gray-500">Review</p>
+                            <p class="text-lg font-semibold text-gray-900">{{ $farmer->petaniOrders()->count() }}</p>
+                            <p class="text-xs text-gray-500">Pesanan</p>
                         </div>
                     </div>
                 </div>
@@ -119,16 +115,9 @@
                 <!-- Actions -->
                 <div class="p-6 pt-0">
                     <div class="flex space-x-2">
-                        <a href="{{ route('social.profile', $farmer->id) }}" class="flex-1 btn-primary text-center">
+                        <a href="{{ route('petani.profile', $farmer->slug ?: $farmer->id) }}" class="flex-1 btn-primary text-center">
                             Lihat Profil
                         </a>
-                        @auth
-                            @if(auth()->user()->isKonsumen())
-                                <button type="button" class="btn-secondary" onclick="SocialManager.toggleFollow({{ $farmer->id }}, this)">
-                                    {{ auth()->user()->isFollowing($farmer) ? 'Unfollow' : 'Follow' }}
-                                </button>
-                            @endif
-                        @endauth
                     </div>
                 </div>
             </div>

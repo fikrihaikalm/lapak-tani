@@ -160,7 +160,7 @@ class PublicController extends Controller
     public function petaniDirectory(Request $request)
     {
         $query = User::where('user_type', 'petani')
-            ->withCount(['products', 'followers'])
+            ->withCount(['products'])
             ->with(['products' => function($q) {
                 $q->take(3);
             }]);
@@ -196,6 +196,29 @@ class PublicController extends Controller
         $petani = $query->paginate(12)->withQueryString();
 
         return view('public-pages.petani-directory', compact('petani'));
+    }
+
+    public function petaniProfile(User $user)
+    {
+        // Ensure the user is a petani
+        if (!$user->isPetani()) {
+            abort(404);
+        }
+
+        // Get user statistics
+        $stats = [
+            'products_count' => $user->products()->count(),
+            'orders_count' => $user->petaniOrders()->count(),
+            'educations_count' => $user->educations()->count(),
+        ];
+
+        // Get recent products
+        $products = $user->products()->latest()->take(6)->get();
+
+        // Get recent educations
+        $educations = $user->educations()->latest()->take(3)->get();
+
+        return view('public-pages.petani-profile', compact('user', 'stats', 'products', 'educations'));
     }
 
     public function search(Request $request)

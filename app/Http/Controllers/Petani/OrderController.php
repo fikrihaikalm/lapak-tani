@@ -50,6 +50,9 @@ class OrderController extends Controller
             'delivered_at' => $request->status === 'delivered' ? now() : $order->delivered_at,
         ]);
 
+        // Generate WhatsApp message untuk update status
+        $message = $this->generateStatusUpdateMessage($order, $request->payment_info);
+
         // Check for verification if order is delivered
         if ($request->status === 'delivered') {
             $petani = auth()->user();
@@ -62,11 +65,16 @@ class OrderController extends Controller
                 $message .= "Badge verifikasi akan muncul di profil Anda. 🏆";
             }
         }
-
-        // Generate WhatsApp message untuk update status
-        $message = $this->generateStatusUpdateMessage($order, $request->payment_info);
-        $customerPhone = $this->formatPhoneNumber($order->phone);
+        $customerPhone = \App\Helpers\PhoneHelper::formatForWhatsApp($order->phone);
         $whatsappUrl = "https://wa.me/{$customerPhone}?text=" . urlencode($message);
+
+        // Log untuk debugging
+        \Log::info('WhatsApp URL generated', [
+            'order_id' => $order->id,
+            'customer_phone' => $customerPhone,
+            'whatsapp_url' => $whatsappUrl,
+            'message_preview' => substr($message, 0, 100)
+        ]);
 
         return response()->json([
             'success' => true,
@@ -126,14 +134,16 @@ class OrderController extends Controller
     {
         // Remove all non-numeric characters
         $phone = preg_replace('/[^0-9]/', '', $phone);
-        
+
         // Convert to international format
         if (substr($phone, 0, 1) === '0') {
+            // Remove leading 0 and add 62
             $phone = '62' . substr($phone, 1);
         } elseif (substr($phone, 0, 2) !== '62') {
+            // If doesn't start with 62, add it
             $phone = '62' . $phone;
         }
-        
+
         return $phone;
     }
 }

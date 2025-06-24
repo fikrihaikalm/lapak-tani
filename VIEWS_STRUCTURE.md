@@ -117,7 +117,7 @@ resources/views/
 ### **3. Shared Components:**
 - `layouts/` - Template yang digunakan bersama
 - `partials/` - Component yang reusable
-- `social/` - Features sosial yang shared
+- ~~`social/` - Features sosial yang shared~~ (REMOVED)
 
 ## 📋 **TODO NEXT:**
 

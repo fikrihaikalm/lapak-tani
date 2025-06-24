@@ -121,8 +121,8 @@
             <div class="bg-gray-50 p-4 rounded-lg">
                 <p class="text-gray-700">
                     <strong>Email:</strong> legal@lapaktani.com<br>
-                    <strong>Telepon:</strong> +62 333 123 4567<br>
-                    <strong>Alamat:</strong> Jl. Pertanian Organik No. 123, Banyuwangi, Jawa Timur 68416
+                    <strong>Telepon:</strong> +62 822 2974 0385r>
+                    <strong>Alamat:</strong> Kampus Tegalboto, Jl. Kalimantan No.37 Krajan Timur, Sumbersari, Kec. Sumbersari Kabupaten Jember, Jawa Timur 68121
                 </p>
             </div>
         </div>

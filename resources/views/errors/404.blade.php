@@ -82,7 +82,7 @@
                     <a href="{{ route('education') }}" class="text-hijau-600 hover:text-hijau-700 hover:underline">📚 Edukasi</a>
                     <a href="{{ route('petani.directory') }}" class="text-hijau-600 hover:text-hijau-700 hover:underline">👨‍🌾 Direktori Petani</a>
                     @auth
-                        <a href="{{ route('social.feed') }}" class="text-hijau-600 hover:text-hijau-700 hover:underline">📱 Feed</a>
+                        <a href="{{ route('profile.show') }}" class="text-hijau-600 hover:text-hijau-700 hover:underline">👤 Profil</a>
                     @endauth
                     <a href="{{ route('about') }}" class="text-hijau-600 hover:text-hijau-700 hover:underline">ℹ️ Tentang Kami</a>
                 </div>

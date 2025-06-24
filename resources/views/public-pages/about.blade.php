@@ -167,9 +167,9 @@
         
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="bg-white rounded-lg shadow text-center p-6">
-                <img src="https://ui-avatars.com/api/?name=Ahmad+Rizki&background=16a34a&color=fff&size=128" 
-                     alt="Ahmad Rizki" class="w-24 h-24 rounded-full mx-auto mb-4">
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Ahmad Rizki</h3>
+                <img src="https://ui-avatars.com/api/?name=MF&background=16a34a&color=fff&size=128"
+                     alt="Muhammad Fikri Haikal" class="w-24 h-24 rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Muhammad Fikri Haikal</h3>
                 <p class="text-hijau-600 mb-3">Founder & CEO</p>
                 <p class="text-gray-600 text-sm">
                     Berpengalaman 10+ tahun di bidang agritech dan passionate dalam memberdayakan petani Indonesia.
@@ -177,22 +177,22 @@
             </div>
             
             <div class="bg-white rounded-lg shadow text-center p-6">
-                <img src="https://ui-avatars.com/api/?name=Sari+Dewi&background=16a34a&color=fff&size=128" 
-                     alt="Sari Dewi" class="w-24 h-24 rounded-full mx-auto mb-4">
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Sari Dewi</h3>
-                <p class="text-hijau-600 mb-3">Head of Operations</p>
+                <img src="https://ui-avatars.com/api/?name=AH&background=3b82f6&color=fff&size=128"
+                     alt="Ahmad Hisyam Ramadhan" class="w-24 h-24 rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Ahmad Hisyam Ramadhan</h3>
+                <p class="text-hijau-600 mb-3">CTO</p>
                 <p class="text-gray-600 text-sm">
-                    Ahli dalam manajemen rantai pasok dan memastikan kualitas produk dari petani ke konsumen.
+                    Expert dalam teknologi digital dan pengembangan platform e-commerce untuk sektor pertanian.
                 </p>
             </div>
             
             <div class="bg-white rounded-lg shadow text-center p-6">
-                <img src="https://ui-avatars.com/api/?name=Budi+Santoso&background=16a34a&color=fff&size=128" 
-                     alt="Budi Santoso" class="w-24 h-24 rounded-full mx-auto mb-4">
-                <h3 class="text-xl font-semibold text-gray-900 mb-2">Budi Santoso</h3>
-                <p class="text-hijau-600 mb-3">Head of Technology</p>
+                <img src="https://ui-avatars.com/api/?name=RA&background=f59e0b&color=fff&size=128"
+                     alt="Royhan Awwabi" class="w-24 h-24 rounded-full mx-auto mb-4">
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Royhan Awwabi</h3>
+                <p class="text-hijau-600 mb-3">Head of Operations</p>
                 <p class="text-gray-600 text-sm">
-                    Software engineer berpengalaman yang membangun platform teknologi untuk mendukung petani.
+                    Mengelola operasional harian dan memastikan kualitas layanan terbaik untuk semua pengguna platform.
                 </p>
             </div>
         </div>
@@ -230,30 +230,23 @@
                 <h3 class="text-2xl font-bold text-gray-900 mb-6">Kantor Pusat Lapak Tani</h3>
                 <div class="space-y-4">
                     <div class="flex items-start space-x-3">
-                        <svg class="w-6 h-6 text-hijau-600 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                        </svg>
+                        <i class="bi bi-geo-alt-fill text-hijau-600 text-xl mt-1"></i>
                         <div>
                             <p class="font-semibold text-gray-900">Alamat</p>
-                            <p class="text-gray-600">Jl. Pertanian Organik No. 123<br>Banyuwangi, Jawa Timur 68416</p>
+                            <p class="text-gray-600">Kampus Tegalboto, Jl. Kalimantan No.37<br>Krajan Timur, Sumbersari, Kec. Sumbersari<br>Kabupaten Jember, Jawa Timur 68121</p>
                         </div>
                     </div>
 
                     <div class="flex items-start space-x-3">
-                        <svg class="w-6 h-6 text-hijau-600 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                        </svg>
+                        <i class="bi bi-telephone-fill text-hijau-600 text-xl mt-1"></i>
                         <div>
                             <p class="font-semibold text-gray-900">Telepon</p>
-                            <p class="text-gray-600">+62 333 123 4567</p>
+                            <p class="text-gray-600">+62 822 2974 0385</p>
                         </div>
                     </div>
 
                     <div class="flex items-start space-x-3">
-                        <svg class="w-6 h-6 text-hijau-600 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                        </svg>
+                        <i class="bi bi-envelope-fill text-hijau-600 text-xl mt-1"></i>
                         <div>
                             <p class="font-semibold text-gray-900">Email</p>
                             <p class="text-gray-600">info@lapaktani.com</p>

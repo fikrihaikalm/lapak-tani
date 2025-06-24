@@ -172,11 +172,11 @@
                                     Stok Habis
                                 </button>
                             @endif
-                            <a href="{{ route('social.profile', $product->user->slug ?: $product->user->id) }}" class="block w-full text-center btn-secondary">
+                            <a href="{{ route('petani.profile', $product->user->slug ?: $product->user->id) }}" class="block w-full text-center btn-secondary">
                                 Lihat Profil Petani
                             </a>
                         @else
-                            <a href="{{ route('social.profile', $product->user->slug ?: $product->user->id) }}" class="block w-full text-center btn-primary">
+                            <a href="{{ route('petani.profile', $product->user->slug ?: $product->user->id) }}" class="block w-full text-center btn-primary">
                                 Lihat Profil Petani
                             </a>
                         @endif
@@ -209,87 +209,28 @@
 
 <script>
 function addToCart(productId) {
-    fetch('/konsumen/cart/add', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({
-            product_id: productId,
-            quantity: 1
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            // Update cart count in navigation
-            const cartCount = document.querySelector('.absolute.-top-2.-right-2');
-            if (cartCount) {
-                cartCount.textContent = data.cart_count;
-            }
-
-            // Show success message
-            showSuccess(data.message);
-        } else {
-            showError(data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        showError('Terjadi kesalahan saat menambahkan ke keranjang');
-    });
+    if (typeof CartManager !== 'undefined') {
+        CartManager.addToCart(productId, 1);
+    } else {
+        showError('Fitur keranjang tidak tersedia');
+    }
 }
 
 function toggleWishlist(productId, button) {
-    fetch('/konsumen/wishlist/toggle', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify({
-            product_id: productId
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            const icon = button.querySelector('svg');
-            if (data.action === 'added') {
-                icon.classList.remove('text-gray-400');
-                icon.classList.add('text-red-500');
-                icon.setAttribute('fill', 'currentColor');
-            } else {
-                icon.classList.remove('text-red-500');
-                icon.classList.add('text-gray-400');
-                icon.setAttribute('fill', 'none');
-            }
-
-            // Show success message
-            alert(data.message);
-        } else {
-            alert(data.message);
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('Terjadi kesalahan saat mengubah wishlist');
-    });
+    if (typeof WishlistManager !== 'undefined') {
+        WishlistManager.toggle(productId, button);
+    } else {
+        showError('Fitur wishlist tidak tersedia');
+    }
 }
 
 // Load cart count on page load
 document.addEventListener('DOMContentLoaded', function() {
     @auth
         @if(auth()->user()->isKonsumen())
-            fetch('/konsumen/keranjang/count')
-                .then(response => response.json())
-                .then(data => {
-                    const cartCount = document.getElementById('cart-count');
-                    if (cartCount) {
-                        cartCount.textContent = data.count;
-                    }
-                });
+            if (typeof CartManager !== 'undefined') {
+                CartManager.loadCartCount();
+            }
         @endif
     @endauth
 });

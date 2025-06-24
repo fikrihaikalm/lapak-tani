@@ -80,9 +80,9 @@ php artisan db:seed --class=ProductCategorySeeder
 - `wishlists` - Wishlist
 
 ### **Social Features:**
-- `posts` - Postingan sosial
-- `post_likes` - Like postingan
-- `post_comments` - Komentar postingan
+- ~~`posts` - Postingan sosial~~ (REMOVED)
+- ~~`post_likes` - Like postingan~~ (REMOVED)
+- ~~`follows` - Follow system~~ (REMOVED)
 
 ### **Content:**
 - `educations` - Konten edukasi

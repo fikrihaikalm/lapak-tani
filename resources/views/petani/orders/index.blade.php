@@ -216,22 +216,22 @@ document.getElementById('confirm-form').addEventListener('submit', function(e) {
     .then(response => response.json())
     .then(data => {
         if (data.success) {
-            alert(data.message);
-            
+            showSuccess(data.message);
+
             // Open WhatsApp
             if (data.whatsapp_url) {
                 window.open(data.whatsapp_url, '_blank');
             }
-            
+
             // Reload page
-            location.reload();
+            setTimeout(() => location.reload(), 1500);
         } else {
-            alert(data.message || 'Terjadi kesalahan');
+            showError(data.message || 'Terjadi kesalahan');
         }
     })
     .catch(error => {
         console.error('Error:', error);
-        alert('Terjadi kesalahan saat mengkonfirmasi pesanan');
+        showError('Terjadi kesalahan saat mengkonfirmasi pesanan');
     })
     .finally(() => {
         submitButton.disabled = false;

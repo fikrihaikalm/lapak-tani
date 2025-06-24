@@ -22,9 +22,7 @@
             <input type="text" id="faq-search" placeholder="Cari pertanyaan..." 
                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hijau-500 focus:border-hijau-500">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
-                </svg>
+                <i class="bi bi-search text-gray-400"></i>
             </div>
         </div>
     </div>
@@ -40,9 +38,7 @@
                 <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-hijau-500" onclick="toggleFAQ(this)">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-semibold text-gray-900">Apa itu Lapak Tani?</h3>
-                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
+                        <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                     </div>
                 </button>
                 <div class="faq-answer hidden px-6 pb-6">
@@ -54,9 +50,7 @@
                 <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-hijau-500" onclick="toggleFAQ(this)">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-semibold text-gray-900">Apakah gratis untuk bergabung?</h3>
-                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
+                        <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                     </div>
                 </button>
                 <div class="faq-answer hidden px-6 pb-6">
@@ -68,9 +62,7 @@
                 <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-hijau-500" onclick="toggleFAQ(this)">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-semibold text-gray-900">Bagaimana cara kerja platform ini?</h3>
-                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
+                        <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                     </div>
                 </button>
                 <div class="faq-answer hidden px-6 pb-6">
@@ -88,9 +80,7 @@
                 <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-hijau-500" onclick="toggleFAQ(this)">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-semibold text-gray-900">Bagaimana cara menjadi petani di platform ini?</h3>
-                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
+                        <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                     </div>
                 </button>
                 <div class="faq-answer hidden px-6 pb-6">
@@ -102,9 +92,7 @@
                 <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-hijau-500" onclick="toggleFAQ(this)">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-semibold text-gray-900">Apakah ada biaya untuk menjual produk?</h3>
-                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
+                        <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                     </div>
                 </button>
                 <div class="faq-answer hidden px-6 pb-6">
@@ -116,9 +104,7 @@
                 <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-hijau-500" onclick="toggleFAQ(this)">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-semibold text-gray-900">Bagaimana sistem pembayaran untuk petani?</h3>
-                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
+                        <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                     </div>
                 </button>
                 <div class="faq-answer hidden px-6 pb-6">
@@ -130,9 +116,7 @@
                 <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-hijau-500" onclick="toggleFAQ(this)">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-semibold text-gray-900">Apa itu badge "Petani Terverifikasi" dan bagaimana cara mendapatkannya?</h3>
-                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
+                        <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                     </div>
                 </button>
                 <div class="faq-answer hidden px-6 pb-6">
@@ -150,9 +134,7 @@
                 <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-hijau-500" onclick="toggleFAQ(this)">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-semibold text-gray-900">Bagaimana cara berbelanja di Lapak Tani?</h3>
-                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
+                        <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                     </div>
                 </button>
                 <div class="faq-answer hidden px-6 pb-6">
@@ -164,9 +146,7 @@
                 <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-hijau-500" onclick="toggleFAQ(this)">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-semibold text-gray-900">Metode pembayaran apa saja yang tersedia?</h3>
-                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
+                        <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                     </div>
                 </button>
                 <div class="faq-answer hidden px-6 pb-6">
@@ -178,9 +158,7 @@
                 <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-hijau-500" onclick="toggleFAQ(this)">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-semibold text-gray-900">Bagaimana jika produk yang diterima tidak sesuai?</h3>
-                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
+                        <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                     </div>
                 </button>
                 <div class="faq-answer hidden px-6 pb-6">
@@ -198,9 +176,7 @@
                 <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-hijau-500" onclick="toggleFAQ(this)">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-semibold text-gray-900">Apakah data saya aman?</h3>
-                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
+                        <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                     </div>
                 </button>
                 <div class="faq-answer hidden px-6 pb-6">
@@ -212,9 +188,7 @@
                 <button class="faq-question w-full text-left p-6 focus:outline-none focus:ring-2 focus:ring-hijau-500" onclick="toggleFAQ(this)">
                     <div class="flex justify-between items-center">
                         <h3 class="text-lg font-semibold text-gray-900">Apakah ada aplikasi mobile?</h3>
-                        <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
+                        <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                     </div>
                 </button>
                 <div class="faq-answer hidden px-6 pb-6">
