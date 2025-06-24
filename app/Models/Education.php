@@ -19,21 +19,17 @@ class Education extends Model
         'slug',
         'content',
         'is_featured',
-        'views_count',
         'image_path',
     ];
 
     protected $casts = [
         'is_featured' => 'boolean',
-        'views_count' => 'integer',
     ];
 
     public function user()
     {
         return $this->belongsTo(User::class);
     }
-
-    // Removed complex relationships - simplified system
 
     public function getExcerptAttribute()
     {
@@ -45,7 +41,6 @@ class Education extends Model
         return $this->image_path ? asset('storage/' . $this->image_path) : asset('no-image.avif');
     }
 
-    // Removed complex attributes - simplified system
 
     public function scopeFeatured($query)
     {
