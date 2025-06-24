@@ -20,12 +20,12 @@ class PublicController extends Controller
             'total_orders' => Order::where('status', 'delivered')->count(),
         ];
 
-        return view('public.about', compact('stats'));
+        return view('public-pages.about', compact('stats'));
     }
 
     public function howItWorks()
     {
-        return view('public.how-it-works');
+        return view('public-pages.how-it-works');
     }
 
     public function testimonials()
@@ -82,27 +82,27 @@ class PublicController extends Controller
             ]
         ];
 
-        return view('public.testimonials', compact('testimonials'));
+        return view('public-pages.testimonials', compact('testimonials'));
     }
 
     public function terms()
     {
-        return view('public.terms');
+        return view('public-pages.terms');
     }
 
     public function privacy()
     {
-        return view('public.privacy');
+        return view('public-pages.privacy');
     }
 
     public function help()
     {
-        return view('public.help');
+        return view('public-pages.help');
     }
 
     public function contact()
     {
-        return view('public.contact');
+        return view('public-pages.contact');
     }
 
     public function submitContact(Request $request)
@@ -152,7 +152,7 @@ class PublicController extends Controller
             ],
         ];
 
-        return view('public.faq', compact('faqs'));
+        return view('public-pages.faq', compact('faqs'));
     }
 
 
@@ -195,7 +195,7 @@ class PublicController extends Controller
 
         $petani = $query->paginate(12)->withQueryString();
 
-        return view('public.petani-directory', compact('petani'));
+        return view('public-pages.petani-directory', compact('petani'));
     }
 
     public function search(Request $request)

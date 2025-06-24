@@ -4,6 +4,17 @@
 
 @section('content')
 <div class="bg-gray-50 min-h-screen">
+    @if(session('active_tab'))
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const activeTab = '{{ session('active_tab') }}';
+                const tabButton = document.querySelector(`button[onclick*="${activeTab}"]`);
+                if (tabButton) {
+                    tabButton.click();
+                }
+            });
+        </script>
+    @endif
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         <!-- Profile Header -->
@@ -37,36 +48,28 @@
                                     <p class="text-xl font-bold text-gray-900">{{ $stats['posts_count'] }}</p>
                                     <p class="text-sm text-gray-500">Posts</p>
                                 </div>
-                            @endif
-                            <div class="text-center">
-                                <p class="text-xl font-bold text-gray-900">{{ $stats['followers_count'] }}</p>
-                                <p class="text-sm text-gray-500">Followers</p>
-                            </div>
-                            <div class="text-center">
-                                <p class="text-xl font-bold text-gray-900">{{ $stats['following_count'] }}</p>
-                                <p class="text-sm text-gray-500">Following</p>
-                            </div>
-                            @if($user->isPetani())
+                                <div class="text-center">
+                                    <p class="text-xl font-bold text-gray-900">{{ $stats['followers_count'] }}</p>
+                                    <p class="text-sm text-gray-500">Followers</p>
+                                </div>
+                                <div class="text-center">
+                                    <p class="text-xl font-bold text-gray-900">{{ $stats['following_count'] }}</p>
+                                    <p class="text-sm text-gray-500">Following</p>
+                                </div>
                                 <div class="text-center">
                                     <p class="text-xl font-bold text-gray-900">{{ $stats['products_count'] }}</p>
                                     <p class="text-sm text-gray-500">Produk</p>
                                 </div>
+                            @else
+                                <!-- Konsumen hanya punya following -->
+                                <div class="text-center">
+                                    <p class="text-xl font-bold text-gray-900">{{ $stats['following_count'] }}</p>
+                                    <p class="text-sm text-gray-500">Following</p>
+                                </div>
                             @endif
                         </div>
 
-                        <!-- Rating for Petani -->
-                        @if($user->isPetani() && $user->rating > 0)
-                            <div class="flex items-center space-x-2 mb-4">
-                                <div class="flex items-center">
-                                    @for($i = 1; $i <= 5; $i++)
-                                        <svg class="w-5 h-5 {{ $i <= $user->rating ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 20 20">
-                                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                                        </svg>
-                                    @endfor
-                                </div>
-                                <span class="text-sm text-gray-600">{{ $user->formatted_rating }} ({{ $user->total_reviews }} review)</span>
-                            </div>
-                        @endif
+
                         
                         <!-- Action Buttons -->
                         @auth
@@ -107,6 +110,12 @@
                         <button type="button" class="tab-button" onclick="SocialManager.switchTab('education', this)">
                             Edukasi
                         </button>
+                        <button type="button" class="tab-button" onclick="SocialManager.switchTab('followers', this)">
+                            Followers
+                        </button>
+                        <button type="button" class="tab-button" onclick="SocialManager.switchTab('following', this)">
+                            Following
+                        </button>
                     @elseif($user->isKonsumen() && auth()->check() && auth()->id() === $user->id)
                         <button type="button" class="tab-button active" onclick="SocialManager.switchTab('orders', this)">
                             Pesanan
@@ -114,17 +123,20 @@
                         <button type="button" class="tab-button" onclick="SocialManager.switchTab('wishlist', this)">
                             Wishlist
                         </button>
-                    @else
-                        <button type="button" class="tab-button active" onclick="SocialManager.switchTab('followers', this)">
-                            Followers
+                        <button type="button" class="tab-button" onclick="SocialManager.switchTab('following', this)">
+                            Following
                         </button>
+                    @else
+                        <!-- Viewing other user's profile -->
+                        @if($user->isPetani())
+                            <button type="button" class="tab-button active" onclick="SocialManager.switchTab('posts', this)">
+                                Posts
+                            </button>
+                            <button type="button" class="tab-button" onclick="SocialManager.switchTab('products', this)">
+                                Produk
+                            </button>
+                        @endif
                     @endif
-                    <button type="button" class="tab-button" onclick="SocialManager.switchTab('followers', this)">
-                        Followers
-                    </button>
-                    <button type="button" class="tab-button" onclick="SocialManager.switchTab('following', this)">
-                        Following
-                    </button>
                 </nav>
             </div>
         </div>
@@ -347,9 +359,7 @@
                             </div>
                         @empty
                             <div class="col-span-full bg-white rounded-lg shadow p-12 text-center">
-                                <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                                </svg>
+                                <i class="fas fa-heart text-6xl text-gray-400 mb-4"></i>
                                 <h3 class="text-lg font-medium text-gray-900 mb-2">Wishlist Kosong</h3>
                                 <p class="text-gray-500 mb-4">Tambahkan produk favorit Anda ke wishlist</p>
                                 <a href="{{ route('products') }}" class="btn-primary">
@@ -360,6 +370,92 @@
                     </div>
                 </div>
             @endif
+
+            <!-- Followers Tab -->
+            <div id="followers-tab" class="tab-content hidden">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Followers</h3>
+                    @if($followers->count() > 0)
+                        <div class="space-y-4">
+                            @foreach($followers as $follower)
+                                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                    <div class="flex items-center space-x-3">
+                                        <img src="{{ $follower->avatar_url }}" alt="{{ $follower->name }}" class="w-12 h-12 rounded-full">
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">{{ $follower->name }}</h4>
+                                            <p class="text-sm text-gray-500">{{ $follower->userType->name ?? 'User' }}</p>
+                                            @if($follower->farm_name)
+                                                <p class="text-xs text-gray-400">{{ $follower->farm_name }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <a href="{{ route('social.profile', $follower->slug) }}" class="btn-secondary">
+                                        Lihat Profile
+                                    </a>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="text-center py-8">
+                            <i class="fas fa-users text-4xl text-gray-400 mb-4"></i>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">Belum Ada Followers</h3>
+                            <p class="text-gray-500">Belum ada yang mengikuti {{ $user->name }}</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+            <!-- Following Tab -->
+            <div id="following-tab" class="tab-content hidden">
+                <div class="p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Following</h3>
+                    @if($following->count() > 0)
+                        <div class="space-y-4">
+                            @foreach($following as $followedUser)
+                                <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                                    <div class="flex items-center space-x-3">
+                                        <img src="{{ $followedUser->avatar_url }}" alt="{{ $followedUser->name }}" class="w-12 h-12 rounded-full">
+                                        <div>
+                                            <h4 class="font-medium text-gray-900">{{ $followedUser->name }}</h4>
+                                            <p class="text-sm text-gray-500">{{ $followedUser->userType->name ?? 'User' }}</p>
+                                            @if($followedUser->farm_name)
+                                                <p class="text-xs text-gray-400">{{ $followedUser->farm_name }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="flex space-x-2">
+                                        <a href="{{ route('social.profile', $followedUser->slug) }}" class="btn-secondary">
+                                            Lihat Profile
+                                        </a>
+                                        @if(auth()->check() && auth()->id() === $user->id)
+                                            <button type="button" class="btn-outline-red" onclick="SocialManager.unfollow({{ $followedUser->id }})">
+                                                Unfollow
+                                            </button>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="text-center py-8">
+                            <i class="fas fa-user-plus text-4xl text-gray-400 mb-4"></i>
+                            <h3 class="text-lg font-medium text-gray-900 mb-2">Belum Mengikuti Siapa-siapa</h3>
+                            <p class="text-gray-500">
+                                @if(auth()->check() && auth()->id() === $user->id)
+                                    Mulai ikuti petani untuk melihat konten mereka
+                                @else
+                                    {{ $user->name }} belum mengikuti siapa-siapa
+                                @endif
+                            </p>
+                            @if(auth()->check() && auth()->id() === $user->id)
+                                <a href="{{ route('petani.directory') }}" class="btn-primary mt-4">
+                                    Cari Petani
+                                </a>
+                            @endif
+                        </div>
+                    @endif
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -375,6 +471,18 @@
 
 .tab-content {
     @apply block;
+}
+
+.tab-content.hidden {
+    @apply hidden;
+}
+
+.btn-secondary {
+    @apply px-4 py-2 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition duration-200;
+}
+
+.btn-outline-red {
+    @apply px-4 py-2 border border-red-300 text-red-600 rounded-lg hover:bg-red-50 transition duration-200;
 }
 
 .tab-content.hidden {

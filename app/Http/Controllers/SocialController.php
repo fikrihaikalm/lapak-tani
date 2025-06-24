@@ -132,9 +132,7 @@ class SocialController extends Controller
         $user = User::with(['products', 'educations'])->findOrFail($id);
         
         $posts = Post::where('user_id', $id)
-            ->with(['likes', 'comments'])
-            ->posts()
-            ->active()
+            ->with(['likes'])
             ->latest()
             ->paginate(10);
 
@@ -143,7 +141,7 @@ class SocialController extends Controller
         $stats = [
             'followers_count' => $user->followers()->count(),
             'following_count' => $user->following()->count(),
-            'posts_count' => Post::where('user_id', $id)->posts()->active()->count(),
+            'posts_count' => Post::where('user_id', $id)->count(),
             'products_count' => $user->products()->count(),
         ];
 
@@ -164,7 +162,11 @@ class SocialController extends Controller
                 ->get();
         }
 
-        return view('social.profile', compact('user', 'posts', 'isFollowing', 'stats', 'orders', 'wishlist'));
+        // Get followers and following data
+        $followers = $user->followers()->with('userType')->get();
+        $following = $user->following()->with('userType')->get();
+
+        return view('social.profile', compact('user', 'posts', 'isFollowing', 'stats', 'orders', 'wishlist', 'followers', 'following'));
     }
 
     public function viewStories(User $user)

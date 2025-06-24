@@ -54,21 +54,13 @@ class FollowController extends Controller
     
     public function followers(User $user)
     {
-        $followers = $user->followers()
-            ->withPivot('created_at')
-            ->orderBy('pivot_created_at', 'desc')
-            ->paginate(20);
-            
-        return view('social.followers', compact('user', 'followers'));
+        // Redirect to profile with followers tab
+        return redirect()->route('social.profile', $user->slug ?: $user->id)->with('active_tab', 'followers');
     }
-    
+
     public function following(User $user)
     {
-        $following = $user->following()
-            ->withPivot('created_at')
-            ->orderBy('pivot_created_at', 'desc')
-            ->paginate(20);
-            
-        return view('social.following', compact('user', 'following'));
+        // Redirect to profile with following tab
+        return redirect()->route('social.profile', $user->slug ?: $user->id)->with('active_tab', 'following');
     }
 }

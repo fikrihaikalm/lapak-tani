@@ -28,9 +28,7 @@
                         </div>
                         @if($petani->is_verified)
                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
-                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-                                </svg>
+                                <i class="bi bi-patch-check-fill mr-1"></i>
                                 Terverifikasi
                             </span>
                         @endif
@@ -59,17 +57,13 @@
                                 <div class="flex items-center space-x-3">
                                     <div class="flex items-center border border-gray-300 rounded-lg">
                                         <button type="button" class="p-2 hover:bg-gray-50" onclick="CartManager.updateQuantity({{ $item->id }}, {{ $item->quantity - 1 }})">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"></path>
-                                            </svg>
+                                            <i class="bi bi-dash"></i>
                                         </button>
                                         <input type="number" value="{{ $item->quantity }}" min="1" max="{{ $item->product->stock }}"
                                                class="w-16 text-center border-0 focus:ring-0"
                                                onchange="CartManager.updateQuantity({{ $item->id }}, this.value)">
                                         <button type="button" class="p-2 hover:bg-gray-50" onclick="CartManager.updateQuantity({{ $item->id }}, {{ $item->quantity + 1 }})">
-                                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
-                                            </svg>
+                                            <i class="bi bi-plus"></i>
                                         </button>
                                     </div>
                                     
@@ -79,9 +73,7 @@
                                     </div>
 
                                     <button type="button" class="text-red-600 hover:text-red-700 p-2" onclick="CartManager.removeFromCart({{ $item->id }})">
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
-                                        </svg>
+                                        <i class="bi bi-trash"></i>
                                     </button>
                                 </div>
                             </div>
@@ -133,9 +125,7 @@
         @endforeach
     @else
         <div class="bg-white rounded-lg shadow p-12 text-center">
-            <svg class="w-16 h-16 text-gray-400 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6"></path>
-            </svg>
+            <i class="bi bi-cart text-6xl text-gray-400 mb-4"></i>
             <h3 class="text-lg font-medium text-gray-900 mb-2">Keranjang Kosong</h3>
             <p class="text-gray-500 mb-6">Belum ada produk di keranjang Anda</p>
             <a href="{{ route('products') }}" class="btn-primary">

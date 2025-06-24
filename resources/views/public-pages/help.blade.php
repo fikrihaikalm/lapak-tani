@@ -23,9 +23,7 @@
                    placeholder="Cari bantuan..." 
                    class="w-full px-4 py-3 pl-12 pr-4 text-gray-900 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hijau-500 focus:border-hijau-500">
             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                </svg>
+                <i class="bi bi-search text-gray-400"></i>
             </div>
         </div>
     </div>
@@ -39,9 +37,7 @@
             <a href="#getting-started" class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition duration-200">
                 <div class="text-center">
                     <div class="w-12 h-12 bg-hijau-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-6 h-6 text-hijau-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                        </svg>
+                        <i class="bi bi-book text-xl text-hijau-600"></i>
                     </div>
                     <h3 class="font-semibold text-gray-900 mb-2">Memulai</h3>
                     <p class="text-sm text-gray-600">Panduan untuk pengguna baru</p>
@@ -51,9 +47,7 @@
             <a href="#buying" class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition duration-200">
                 <div class="text-center">
                     <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                        </svg>
+                        <i class="bi bi-bag text-xl text-blue-600"></i>
                     </div>
                     <h3 class="font-semibold text-gray-900 mb-2">Berbelanja</h3>
                     <p class="text-sm text-gray-600">Cara membeli produk</p>
@@ -63,9 +57,7 @@
             <a href="#selling" class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition duration-200">
                 <div class="text-center">
                     <div class="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                        </svg>
+                        <i class="bi bi-currency-dollar text-xl text-yellow-600"></i>
                     </div>
                     <h3 class="font-semibold text-gray-900 mb-2">Berjualan</h3>
                     <p class="text-sm text-gray-600">Cara menjual produk</p>
@@ -75,9 +67,7 @@
             <a href="#account" class="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-lg transition duration-200">
                 <div class="text-center">
                     <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/>
-                        </svg>
+                        <i class="bi bi-person text-xl text-purple-600"></i>
                     </div>
                     <h3 class="font-semibold text-gray-900 mb-2">Akun</h3>
                     <p class="text-sm text-gray-600">Pengaturan akun</p>
@@ -99,9 +89,7 @@
                     <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
                         <div class="flex justify-between items-center">
                             <h3 class="text-lg font-semibold text-gray-900">Bagaimana cara mendaftar di Lapak Tani?</h3>
-                            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
+                            <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                         </div>
                     </button>
                     <div class="faq-answer hidden px-6 pb-6">
@@ -113,9 +101,7 @@
                     <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
                         <div class="flex justify-between items-center">
                             <h3 class="text-lg font-semibold text-gray-900">Apa perbedaan akun Petani dan Konsumen?</h3>
-                            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
+                            <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                         </div>
                     </button>
                     <div class="faq-answer hidden px-6 pb-6">
@@ -133,9 +119,7 @@
                     <button class="faq-question w-full text-left p-6 focus:outline-none" onclick="toggleFAQ(this)">
                         <div class="flex justify-between items-center">
                             <h3 class="text-lg font-semibold text-gray-900">Bagaimana cara memesan produk?</h3>
-                            <svg class="w-5 h-5 text-gray-500 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                            </svg>
+                            <i class="bi bi-chevron-down text-gray-500 transform transition-transform"></i>
                         </div>
                     </button>
                     <div class="faq-answer hidden px-6 pb-6">
@@ -238,9 +222,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div class="bg-gray-50 rounded-lg p-6">
                 <div class="w-12 h-12 bg-hijau-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-6 h-6 text-hijau-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                    </svg>
+                    <i class="bi bi-envelope text-xl text-hijau-600"></i>
                 </div>
                 <h3 class="font-semibold text-gray-900 mb-2">Email</h3>
                 <p class="text-gray-600 text-sm mb-3">support@lapaktani.com</p>
@@ -249,9 +231,7 @@
 
             <div class="bg-gray-50 rounded-lg p-6">
                 <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                    </svg>
+                    <i class="bi bi-telephone text-xl text-blue-600"></i>
                 </div>
                 <h3 class="font-semibold text-gray-900 mb-2">Telepon</h3>
                 <p class="text-gray-600 text-sm mb-3">+62 333 123 4567</p>

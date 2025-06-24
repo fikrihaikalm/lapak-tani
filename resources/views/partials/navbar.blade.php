@@ -74,9 +74,7 @@
             <div class="flex items-center">
                 <!-- Search Icon -->
                 <button id="search-toggle" class="p-2 text-gray-700 hover:text-hijau-600 transition duration-200">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                    </svg>
+                    <i class="bi bi-search text-lg"></i>
                 </button>
 
                 <!-- Expandable Search Box -->
@@ -87,9 +85,7 @@
                                    placeholder="Cari produk, artikel, petani..."
                                    class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-hijau-500 focus:border-hijau-500">
                             <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                                <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
-                                </svg>
+                                <i class="bi bi-search text-gray-400"></i>
                             </div>
 
                             <!-- Search Results -->
@@ -129,9 +125,7 @@
                             <a href="{{ route('konsumen.wishlist.index') }}"
                                class="relative text-gray-700 hover:text-hijau-600 transition duration-200"
                                title="Wishlist">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-                                </svg>
+                                <i class="bi bi-heart text-xl"></i>
                                 @if(auth()->user()->wishlistItems()->count() > 0)
                                     <span class="absolute -top-2 -right-2 bg-pink-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                                         {{ auth()->user()->wishlistItems()->count() }}
@@ -143,9 +137,7 @@
                             <a href="{{ route('konsumen.cart.index') }}"
                                class="relative text-gray-700 hover:text-hijau-600 transition duration-200"
                                title="Keranjang">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9"/>
-                                </svg>
+                                <i class="bi bi-cart text-xl"></i>
                                 @if(auth()->user()->cartItems()->count() > 0)
                                     <span class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
                                         {{ auth()->user()->cartItems()->count() }}
@@ -157,9 +149,7 @@
                             <a href="{{ route('konsumen.orders.index') }}"
                                class="relative text-gray-700 hover:text-hijau-600 transition duration-200"
                                title="Pesanan">
-                                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
-                                </svg>
+                                <i class="bi bi-bag text-xl"></i>
                                 @php
                                     $pendingOrders = auth()->user()->orders()->where('status', 'pending')->count();
                                 @endphp
@@ -210,9 +200,7 @@
             <!-- Mobile menu button -->
             <div class="md:hidden">
                 <button type="button" class="mobile-menu-button text-gray-700 hover:text-hijau-600">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
-                    </svg>
+                    <i class="bi bi-list text-2xl"></i>
                 </button>
             </div>
         </div>

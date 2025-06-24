@@ -63,7 +63,7 @@ class HomeController extends Controller
         $products = $query->paginate(12)->withQueryString();
         $categories = \App\Models\ProductCategory::all();
 
-        return view('products.index', compact('products', 'categories'));
+        return view('public-pages.products.index', compact('products', 'categories'));
     }
 
     public function education(Request $request)
@@ -94,7 +94,7 @@ class HomeController extends Controller
 
         $educations = $query->paginate(9)->withQueryString();
 
-        return view('education.index', compact('educations'));
+        return view('public-pages.education.index', compact('educations'));
     }
 
     public function educationShow(Education $education)
@@ -107,7 +107,7 @@ class HomeController extends Controller
             ->take(3)
             ->get();
 
-        return view('education.show', compact('education', 'relatedEducations'));
+        return view('public-pages.education.show', compact('education', 'relatedEducations'));
     }
 
     public function productShow(Product $product)
@@ -119,6 +119,6 @@ class HomeController extends Controller
             ->take(4)
             ->get();
 
-        return view('products.show', compact('product', 'relatedProducts'));
+        return view('public-pages.products.show', compact('product', 'relatedProducts'));
     }
 }

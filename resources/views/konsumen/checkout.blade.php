@@ -122,10 +122,7 @@
                             class="w-full bg-hijau-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-hijau-700 transition duration-200">
                         <span id="checkout-text">Pesan via WhatsApp</span>
                         <span id="checkout-loading" class="hidden">
-                            <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white inline" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
+                            <i class="bi bi-arrow-clockwise animate-spin mr-2"></i>
                             Memproses...
                         </span>
                     </button>
@@ -138,9 +135,7 @@
                 
                 <div class="mt-6 p-4 bg-blue-50 rounded-lg">
                     <div class="flex items-start space-x-2">
-                        <svg class="w-5 h-5 text-blue-600 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
-                        </svg>
+                        <i class="bi bi-info-circle text-blue-600 mt-0.5"></i>
                         <div class="text-sm text-blue-800">
                             <p class="font-medium mb-1">Cara Pemesanan:</p>
                             <ol class="list-decimal list-inside space-y-1 text-xs">
@@ -162,9 +157,7 @@
     <div class="bg-white rounded-lg max-w-md w-full p-6">
         <div class="text-center">
             <div class="w-16 h-16 bg-hijau-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg class="w-8 h-8 text-hijau-600" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                </svg>
+                <i class="bi bi-check-circle-fill text-hijau-600 text-3xl"></i>
             </div>
             
             <h3 class="text-lg font-semibold text-gray-900 mb-2">Pesanan Berhasil Dibuat!</h3>

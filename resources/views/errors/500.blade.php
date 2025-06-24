@@ -35,9 +35,7 @@
             <div class="relative">
                 <!-- Wilted Plant -->
                 <div class="inline-block animate-pulse">
-                    <svg class="w-32 h-32 mx-auto text-red-500" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17h2v-2h-2v2zm0-4h2V7h-2v8z"/>
-                    </svg>
+                    <i class="bi bi-exclamation-triangle text-8xl text-red-500"></i>
                 </div>
                 
                 <!-- Floating Elements -->

@@ -114,9 +114,7 @@
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <div class="bg-gray-50 rounded-lg p-6">
                 <div class="bg-hijau-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-hijau-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-1.5 6M7 13l-1.5 6m0 0h9M17 13v6a2 2 0 01-2 2H9a2 2 0 01-2-2v-6"/>
-                    </svg>
+                    <i class="bi bi-cart text-2xl text-hijau-600"></i>
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">E-Commerce Terintegrasi</h3>
                 <p class="text-gray-600">Sistem belanja online lengkap dengan keranjang, wishlist, dan tracking pesanan</p>
@@ -124,9 +122,7 @@
             
             <div class="bg-gray-50 rounded-lg p-6">
                 <div class="bg-purple-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-purple-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/>
-                    </svg>
+                    <i class="bi bi-book text-2xl text-purple-600"></i>
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Konten Edukasi</h3>
                 <p class="text-gray-600">Artikel dan video pembelajaran tentang teknik pertanian modern</p>
@@ -134,9 +130,7 @@
             
             <div class="bg-gray-50 rounded-lg p-6">
                 <div class="bg-blue-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
-                    </svg>
+                    <i class="bi bi-chat-dots text-2xl text-blue-600"></i>
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Social Network</h3>
                 <p class="text-gray-600">Berbagi pengalaman, tips, dan membangun komunitas pertanian</p>
@@ -144,9 +138,7 @@
             
             <div class="bg-gray-50 rounded-lg p-6">
                 <div class="bg-green-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                    </svg>
+                    <i class="bi bi-currency-dollar text-xl text-green-600"></i>
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Manajemen Keuangan</h3>
                 <p class="text-gray-600">Tools untuk mencatat pemasukan, pengeluaran, dan analisis keuntungan</p>
@@ -154,9 +146,7 @@
             
             <div class="bg-gray-50 rounded-lg p-6">
                 <div class="bg-yellow-100 rounded-lg w-12 h-12 flex items-center justify-center mb-4">
-                    <svg class="w-6 h-6 text-yellow-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-                    </svg>
+                    <i class="bi bi-shield-check text-2xl text-yellow-600"></i>
                 </div>
                 <h3 class="text-lg font-semibold text-gray-900 mb-2">Verifikasi Petani</h3>
                 <p class="text-gray-600">Sistem verifikasi untuk memastikan kualitas dan kepercayaan</p>
