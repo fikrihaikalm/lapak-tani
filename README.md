@@ -1,7 +1,7 @@
 # 🌱 Lapak Tani - Platform Pertanian Lokal
 
 <p align="center">
-  <img src="public/logo.png" alt="Lapak Tani Logo" width="200">
+  <img src="public/favicon.png" alt="Lapak Tani Logo" width="200">
 </p>
 
 <p align="center">
