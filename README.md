@@ -1,4 +1,4 @@
-# 🌱 Lapak Tani - Platform Pertanian Lokal
+# 🌱 Lapak Tani - Sistem Informasi Berbasis Website Sebagai Media Komunitas dan Perdagangan Produk Pertanian
 
 <p align="center">
   <img src="public/favicon.png" alt="Lapak Tani Logo" width="200">
